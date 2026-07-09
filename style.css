@@ -1,60 +1,106 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
 body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#f4f6f9;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
+background:#eef2f7;
+padding:20px;
 }
 
 .container{
-    width:90%;
-    max-width:450px;
-    background:#fff;
-    padding:20px;
-    border-radius:15px;
-    box-shadow:0 5px 20px rgba(0,0,0,.15);
+max-width:700px;
+margin:auto;
+background:#fff;
+padding:20px;
+border-radius:15px;
+box-shadow:0 5px 20px rgba(0,0,0,.15);
 }
 
-h2{
-    text-align:center;
-    color:#0077ff;
+h1{
+text-align:center;
+color:#0077ff;
+margin-bottom:20px;
 }
 
-input, textarea{
-    width:100%;
-    padding:10px;
-    margin:8px 0;
-    border:1px solid #ccc;
-    border-radius:8px;
-    box-sizing:border-box;
+h3{
+margin:20px 0 10px;
+color:#333;
 }
 
-button{
-    width:48%;
-    padding:10px;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    margin-top:10px;
-    font-weight:bold;
+label{
+display:block;
+margin-bottom:8px;
+font-weight:bold;
 }
 
-button:first-of-type{
-    background:#0077ff;
-    color:white;
-}
-
-button:last-of-type{
-    background:#28a745;
-    color:white;
-}
-
-button:hover{
-    opacity:.9;
+textarea,
+input,
+select{
+width:100%;
+padding:12px;
+margin-bottom:12px;
+border:1px solid #ccc;
+border-radius:10px;
+font-size:15px;
+outline:none;
 }
 
 textarea{
-    margin-top:15px;
+resize:vertical;
+min-height:150px;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+border-color:#0077ff;
+box-shadow:0 0 5px rgba(0,119,255,.3);
+}
+
+.btn-group{
+display:flex;
+gap:10px;
+margin:15px 0;
+}
+
+button{
+flex:1;
+padding:12px;
+border:none;
+border-radius:10px;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+background:#0077ff;
+color:white;
+transition:.2s;
+}
+
+button:hover{
+opacity:.9;
+transform:scale(.98);
+}
+
+#hasil{
+min-height:320px;
+background:#f8f8f8;
+}
+
+@media(max-width:600px){
+
+.container{
+padding:15px;
+}
+
+.btn-group{
+flex-direction:column;
+}
+
+button{
+width:100%;
+}
+
 }
