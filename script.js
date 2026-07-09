@@ -4,23 +4,20 @@ function getData(label, text) {
     if (label.toLowerCase() === "service id" || label.toLowerCase() === "sid") {
         const regexGabungan = /(?:Servi[cs]e\s*Id|CRM\s*ID|SID)\s*\/[^:\n]*\n([^\n]+)/i;
         const matchGabungan = text.match(regexGabungan);
-        // Pastikan baris bawahnya ada dan tidak mengandung teks label lain/garis miring lagi
         if (matchGabungan && !matchGabungan[1].includes("/") && !/[a-z]/i.test(matchGabungan[1])) {
             return matchGabungan[1].trim();
         }
     }
 
     // 2. Format standar: Teks ada di baris yang sama (contoh: Service Id : 12345)
-    // Kita pastikan tidak mengambil sisa label seperti "/ CRM ID" dengan membatasi karakter non-spasi awal
     const regexSebaris = new RegExp(label + "\\s*[:=-]?\\s*([^\\s/\\n][^\\n]*)", "i");
     let match = text.match(regexSebaris);
     
-    // Validasi tambahan agar tidak kecolongan teks "/ CRM ID" jika label dicari terpisah
     if (match && match[1].trim().startsWith("/")) {
         match = null;
     }
 
-    // 3. Format Fallback: Teks ada di baris bawahnya (contoh: Service Id [Enter] 12345)
+    // 3. Format Fallback: Teks ada di baris bawahnya
     if (!match) {
         const regexBawah = new RegExp(label + "\\s*\\n([^\\n]+)", "i");
         match = text.match(regexBawah);
@@ -48,15 +45,14 @@ function ambilData() {
     // Nama
     document.getElementById("nama").value = getData("Nama", text);
 
-    // --- PENCARIAN SID BERLAPIS & PINTAR ---
+    // PENCARIAN SID BERLAPIS & PINTAR
     let sidData = getData("Service Id", text); 
-    if (!sidData) sidData = getData("Servise Id", text); // Kebal typo "servise"
+    if (!sidData) sidData = getData("Servise Id", text); 
     if (!sidData) sidData = getData("CRM Id", text);
     if (!sidData) sidData = getData("CRM", text);
     if (!sidData) sidData = getData("SID", text);
     
     document.getElementById("sid").value = sidData;
-    // ---------------------------------------
 
     // Layanan
     const layanan = getData("Layanan Produk", text) || getData("Layanan", text);
@@ -79,6 +75,7 @@ function generate() {
         return;
     }
 
+    // PERBAIKAN: Menghapus tanda titik koma (;) yang salah pada getElementById("action")
     const hasil =
 `FORMAT TIKET CLOSE
 ====================================
@@ -89,7 +86,7 @@ Nama : ${document.getElementById("nama").value}
 SID : ${document.getElementById("sid").value}
 Layanan : ${document.getElementById("layanan").value} Mbps
 Rootcause : ${document.getElementById("rootcause").value}
-Action : ${document.getElementById;("action").value}
+Action : ${document.getElementById("action").value}
 
 Material Terpakai
 -------------------
