@@ -1,25 +1,26 @@
+// Fungsi Helper untuk mengambil data berdasarkan label
 function getData(label, text) {
     const regex = new RegExp(label + "\\s*\\n([^\\n]+)", "i");
     const match = text.match(regex);
     return match ? match[1].trim() : "";
 }
 
+// Fungsi 1: Ambil data dari tiket mentah
 function ambilData() {
-
     const text = document.getElementById("raw").value;
 
-    if(text.trim()==""){
+    if (text.trim() == "") {
         alert("Paste isi tiket terlebih dahulu!");
         return;
     }
 
-    // No Tiket = baris pertama
+    // Ambil No Tiket dari baris pertama (hapus simbol jika ada)
     const lines = text.split("\n").filter(x => x.trim() !== "");
-    document.getElementById("notiket").value = lines[0] || "";
+    document.getElementById("notiket").value = lines[0] ? lines[0].replace(/[^A-Z0-9-]/gi, '').trim() : "";
 
     // No Insiden
-    const insiden = (text.match(/INSIDEN NO\.?\s*(.+)/i) || ["",""])[1];
-    document.getElementById("insiden").value = insiden;
+    const insiden = (text.match(/INSIDEN NO\.?\s*(.+)/i) || ["", ""])[1];
+    document.getElementById("insiden").value = insiden.trim();
 
     // Nama
     document.getElementById("nama").value = getData("Nama", text);
@@ -29,24 +30,32 @@ function ambilData() {
 
     // Layanan
     const layanan = getData("Layanan Produk", text);
-    const mbps = (layanan.match(/(\d+)/) || ["",""])[1];
+    const mbps = (layanan.match(/(\d+)/) || ["", ""])[1];
     document.getElementById("layanan").value = mbps;
 
     // Alamat
     const alamat = getData("Alamat", text);
     document.getElementById("alamat").value = alamat;
 
-    // Otomatis isi TIKOR USER
-    document.getElementById("tikoruser").value = alamat;
+    // KOSONGKAN TIKOR USER (Agar diisi manual sesuai request)
+    document.getElementById("tikoruser").value = "";
 }
 
+// Fungsi 2: Susun format tiket close
 function generate() {
+    const notiket = document.getElementById("notiket").value;
+    const insiden = document.getElementById("insiden").value;
+
+    if (notiket.trim() == "" && insiden.trim() == "") {
+        alert("Data tiket masih kosong. Silakan generate atau isi data terlebih dahulu.");
+        return;
+    }
 
     const hasil =
 `FORMAT TIKET CLOSE
 ====================================
-No Tiket : ${document.getElementById("notiket").value}
-No Insiden : ${document.getElementById("insiden").value}
+No Tiket : ${notiket}
+No Insiden : ${insiden}
 Tim : ${document.getElementById("tim").value}
 Nama : ${document.getElementById("nama").value}
 SID : ${document.getElementById("sid").value}
@@ -69,20 +78,21 @@ TIKOR TITIK PUTUS : ${document.getElementById("tikorputus").value}`;
     document.getElementById("hasil").value = hasil;
 }
 
+// Fungsi 3: Salin hasil ke clipboard
 function copyText() {
-
     const hasil = document.getElementById("hasil").value;
 
+    if (hasil.trim() == "") {
+        alert("Belum ada hasil format close untuk disalin.");
+        return;
+    }
+
     navigator.clipboard.writeText(hasil);
-
-    alert("Berhasil disalin!");
-
+    alert("Hasil format close berhasil disalin!");
 }
 
+// Fungsi 4: Reset semua form
 function resetForm() {
-
-    document.querySelectorAll("input").forEach(e=>e.value="");
-    document.querySelectorAll("textarea").forEach(e=>e.value="");
-    document.querySelectorAll("select").forEach(e=>e.selectedIndex=0);
-
+    document.querySelectorAll("input").forEach(e => e.value = "");
+    document.querySelectorAll("textarea").forEach(e => e.value = "");
 }
