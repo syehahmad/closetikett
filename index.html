@@ -9,38 +9,21 @@
 <body>
 
 <div class="container">
+
 <h2>📋 Generator Tiket Close</h2>
 
-<input type="text" id="tiket" placeholder="Nomor Tiket">
-<input type="text" id="nama" placeholder="Nama Pelanggan">
-<input type="text" id="sid" placeholder="SID">
-<input type="number" id="layanan" placeholder="Layanan (Mbps)">
-<input type="text" id="rootcause" placeholder="Rootcause">
-<input type="text" id="action" placeholder="Action">
-
-<h3>Material Terpakai</h3>
-
-<input type="text" id="snkabel" placeholder="SN Kabel">
-<input type="text" id="snont" placeholder="SN ONT">
-<input type="text" id="apc" placeholder="Pathcord APC">
-<input type="text" id="upc" placeholder="Pathcord UPC">
-<input type="text" id="sleeve" placeholder="Sleeve Protektor">
-<input type="text" id="pigtail" placeholder="Pigtail">
-
-<h3>Lokasi</h3>
-
-<input type="text" id="tikoruser" placeholder="TIKOR USER">
-<input type="text" id="tikorputus" placeholder="TIKOR TITIK PUTUS">
+<textarea id="raw" placeholder="Paste isi tiket MyICON+ di sini..."></textarea>
 
 <div class="btn">
 <button onclick="generate()">Generate</button>
 <button onclick="copyText()">Copy</button>
 </div>
 
-<textarea id="hasil" rows="18" readonly></textarea>
+<textarea id="hasil" readonly placeholder="Hasil akan muncul di sini..."></textarea>
 
 </div>
 
 <script src="script.js"></script>
+
 </body>
 </html>
