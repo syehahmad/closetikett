@@ -32,7 +32,7 @@ body {
 .control-container {
     flex: 1.6; /* Diperbesar agar preview hasil sangat luas */
     background: #fff;
-    border-radius: 12px;
+    border-radius: 9px;
     padding: 20px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
     display: flex;
