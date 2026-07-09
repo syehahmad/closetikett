@@ -1,13 +1,29 @@
-// Fungsi regex yang lebih fleksibel (bisa membaca di sebelah kanan label atau di bawahnya)
+// Fungsi regex pintar yang kebal format sebaris, beda baris, dan gabungan garis miring
 function getData(label, text) {
-    // Mencari label, mengabaikan spasi/titik dua, lalu mengambil teks di baris yang sama atau baris berikutnya
-    const regex = new RegExp(label + "\\s*[:=-]?\\s*([^\n]+)", "i");
-    let match = text.match(regex);
+    // 1. Cek dulu apakah labelnya berupa model gabungan (contoh: Service Id / CRM ID)
+    if (label.toLowerCase() === "service id" || label.toLowerCase() === "sid") {
+        const regexGabungan = /(?:Servi[cs]e\s*Id|CRM\s*ID|SID)\s*\/[^:\n]*\n([^\n]+)/i;
+        const matchGabungan = text.match(regexGabungan);
+        // Pastikan baris bawahnya ada dan tidak mengandung teks label lain/garis miring lagi
+        if (matchGabungan && !matchGabungan[1].includes("/") && !/[a-z]/i.test(matchGabungan[1])) {
+            return matchGabungan[1].trim();
+        }
+    }
+
+    // 2. Format standar: Teks ada di baris yang sama (contoh: Service Id : 12345)
+    // Kita pastikan tidak mengambil sisa label seperti "/ CRM ID" dengan membatasi karakter non-spasi awal
+    const regexSebaris = new RegExp(label + "\\s*[:=-]?\\s*([^\\s/\\n][^\\n]*)", "i");
+    let match = text.match(regexSebaris);
     
-    // Jika tidak ketemu di baris yang sama, pakai cara lama (cari di baris bawahnya)
+    // Validasi tambahan agar tidak kecolongan teks "/ CRM ID" jika label dicari terpisah
+    if (match && match[1].trim().startsWith("/")) {
+        match = null;
+    }
+
+    // 3. Format Fallback: Teks ada di baris bawahnya (contoh: Service Id [Enter] 12345)
     if (!match) {
-        const regexFallback = new RegExp(label + "\\s*\\n([^\\n]+)", "i");
-        match = text.match(regexFallback);
+        const regexBawah = new RegExp(label + "\\s*\\n([^\\n]+)", "i");
+        match = text.match(regexBawah);
     }
     
     return match ? match[1].trim() : "";
@@ -32,21 +48,15 @@ function ambilData() {
     // Nama
     document.getElementById("nama").value = getData("Nama", text);
 
-    // --- PERBAIKAN UTAMA: SISTEM BERLAPIS UNTUK SID / CRM ID ---
-    let sidData = getData("Service Id", text); // 1. Cari "Service ID" atau "Service Id"
-    
-    if (!sidData) {
-        sidData = getData("CRM Id", text); // 2. Kalau zonk, cari "CRM ID" atau "CRM Id"
-    }
-    if (!sidData) {
-        sidData = getData("CRM", text); // 3. Kalau zonk juga, cari kata "CRM" saja
-    }
-    if (!sidData) {
-        sidData = getData("SID", text); // 4. Terakhir, cari kata "SID" saja
-    }
+    // --- PENCARIAN SID BERLAPIS & PINTAR ---
+    let sidData = getData("Service Id", text); 
+    if (!sidData) sidData = getData("Servise Id", text); // Kebal typo "servise"
+    if (!sidData) sidData = getData("CRM Id", text);
+    if (!sidData) sidData = getData("CRM", text);
+    if (!sidData) sidData = getData("SID", text);
     
     document.getElementById("sid").value = sidData;
-    // -----------------------------------------------------------
+    // ---------------------------------------
 
     // Layanan
     const layanan = getData("Layanan Produk", text) || getData("Layanan", text);
@@ -79,7 +89,7 @@ Nama : ${document.getElementById("nama").value}
 SID : ${document.getElementById("sid").value}
 Layanan : ${document.getElementById("layanan").value} Mbps
 Rootcause : ${document.getElementById("rootcause").value}
-Action : ${document.getElementById("action").value}
+Action : ${document.getElementById;("action").value}
 
 Material Terpakai
 -------------------
