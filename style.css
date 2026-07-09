@@ -17,22 +17,24 @@ body {
     display: flex;
     gap: 20px;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1300px;
 }
 
-.form-container, .control-container {
+/* Pengaturan pembagian area kiri dan kanan di PC */
+.form-container {
+    flex: 1.1; /* Diperkecil agar area input hemat ruang */
     background: #fff;
     border-radius: 12px;
-    padding: 25px;
+    padding: 20px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
 }
 
-.form-container {
-    flex: 2;
-}
-
 .control-container {
-    flex: 1;
+    flex: 1.6; /* Diperbesar agar preview hasil sangat luas */
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -43,32 +45,37 @@ body {
 
 .header {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     border-bottom: 2px solid #edf2f7;
-    padding-bottom: 15px;
+    padding-bottom: 12px;
 }
 
 .logo {
-    max-width: 150px;
-    margin-bottom: 10px;
+    max-width: 180px;
+    height: auto;
+    margin-bottom: 5px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-h1 {
-    font-size: 22px;
+.header h3 {
+    font-size: 15px;
     color: #004a99;
     font-weight: 700;
+    margin-top: 5px;
 }
 
 .form-section {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .form-row {
     display: flex;
-    gap: 15px;
+    gap: 12px;
 }
 
 .input-group {
@@ -77,18 +84,20 @@ h1 {
     flex-direction: column;
 }
 
+/* Mengurangi ukuran teks label */
 .input-group label {
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 600;
     color: #555;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
 }
 
+/* Mengurangi ukuran teks dalam form input */
 input, textarea {
-    padding: 10px 12px;
+    padding: 8px 10px;
     border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 14px;
+    border-radius: 6px;
+    font-size: 12px;
     transition: 0.2s;
     background: #fafafa;
 }
@@ -105,12 +114,11 @@ textarea {
 }
 
 #raw {
-    min-height: 80px;
+    min-height: 70px;
 }
 
 .full-width {
     width: 100%;
-    margin-bottom: 10px;
 }
 
 .action-buttons {
@@ -120,20 +128,20 @@ textarea {
 }
 
 button {
-    padding: 12px;
+    padding: 10px;
     border: none;
-    border-radius: 8px;
-    font-size: 14px;
+    border-radius: 6px;
+    font-size: 13px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
 }
 
-.btn-primary { background: #004a99; color: #fff; grid-column: 1 / -1; margin-top: 10px; }
+.btn-primary { background: #004a99; color: #fff; grid-column: 1 / -1; margin-top: 5px; }
 .btn-primary:hover { background: #003a7a; }
 
 .btn-success { background: #28a745; color: #fff; grid-column: 1 / -1; }
@@ -145,19 +153,21 @@ button {
 .btn-danger { background: #dc3545; color: #fff; }
 .btn-danger:hover { background: #c82333; }
 
+/* Box hitam preview hasil yang diperbesar */
 #hasil {
     flex: 1;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 13px;
+    font-size: 14px;
     background: #212529;
     color: #f8f9fa;
-    padding: 15px;
+    padding: 20px;
     border-radius: 8px;
     border: none;
     resize: none;
+    line-height: 1.5;
 }
 
-/* Responsive Desain untuk HP */
+/* Desain Responsif untuk Layanan Mobile/HP */
 @media (max-width: 900px) {
     .main-wrapper {
         flex-direction: column;
@@ -168,6 +178,9 @@ button {
     }
     .form-row {
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
+    }
+    #hasil {
+        min-height: 300px;
     }
 }
