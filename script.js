@@ -5,29 +5,38 @@ function getData(label, text) {
 }
 
 function ambilData() {
+
     const text = document.getElementById("raw").value;
 
-    // Nomor tiket
-    const tiket = (text.match(/INSIDEN NO\.?\s*(\d+)/i) || ["",""])[1];
+    if(text.trim()==""){
+        alert("Paste isi tiket terlebih dahulu!");
+        return;
+    }
 
-    // Data lain
-    const nama = getData("Nama", text);
-    const sid = getData("Service Id", text);
+    // No Tiket = baris pertama
+    const lines = text.split("\n").filter(x => x.trim() !== "");
+    document.getElementById("notiket").value = lines[0] || "";
+
+    // No Insiden
+    const insiden = (text.match(/INSIDEN NO\.?\s*(.+)/i) || ["",""])[1];
+    document.getElementById("insiden").value = insiden;
+
+    // Nama
+    document.getElementById("nama").value = getData("Nama", text);
+
+    // SID
+    document.getElementById("sid").value = getData("Service Id", text);
+
+    // Layanan
     const layanan = getData("Layanan Produk", text);
-    const alamat = getData("Alamat", text);
-
-    // Ambil angka Mbps saja
-    let mbps = "";
-    const m = layanan.match(/(\d+)/);
-    if (m) mbps = m[1];
-
-    document.getElementById("tiket").value = tiket;
-    document.getElementById("nama").value = nama;
-    document.getElementById("sid").value = sid;
+    const mbps = (layanan.match(/(\d+)/) || ["",""])[1];
     document.getElementById("layanan").value = mbps;
+
+    // Alamat
+    const alamat = getData("Alamat", text);
     document.getElementById("alamat").value = alamat;
 
-    // Isi otomatis TIKOR USER dengan alamat
+    // Otomatis isi TIKOR USER
     document.getElementById("tikoruser").value = alamat;
 }
 
@@ -36,54 +45,44 @@ function generate() {
     const hasil =
 `FORMAT TIKET CLOSE
 ====================================
-Tiket/Insiden : ${tiket.value}
-Tim : KENDAL
-Nama : ${nama.value}
-SID : ${sid.value}
-Layanan : ${layanan.value} Mbps
-Rootcause : ${rootcause.value}
-Action : ${action.value}
+No Tiket : ${document.getElementById("notiket").value}
+No Insiden : ${document.getElementById("insiden").value}
+Tim : ${document.getElementById("tim").value}
+Nama : ${document.getElementById("nama").value}
+SID : ${document.getElementById("sid").value}
+Layanan : ${document.getElementById("layanan").value} Mbps
+Rootcause : ${document.getElementById("rootcause").value}
+Action : ${document.getElementById("action").value}
 
 Material Terpakai
 -------------------
-SN Kabel : ${snkabel.value}
-SN ONT : ${snont.value}
-Pathcord APC : ${apc.value}
-Pathcord UPC : ${upc.value}
-Sleeve Protektor : ${sleeve.value}
-Pigtail : ${pigtail.value}
+SN Kabel : ${document.getElementById("snkabel").value}
+SN ONT : ${document.getElementById("snont").value}
+Pathcord APC : ${document.getElementById("apc").value}
+Pathcord UPC : ${document.getElementById("upc").value}
+Sleeve Protektor : ${document.getElementById("sleeve").value}
+Pigtail : ${document.getElementById("pigtail").value}
 ====================================
-TIKOR USER : ${tikoruser.value}
-TIKOR TITIK PUTUS : ${tikorputus.value}`;
+TIKOR USER : ${document.getElementById("tikoruser").value}
+TIKOR TITIK PUTUS : ${document.getElementById("tikorputus").value}`;
 
     document.getElementById("hasil").value = hasil;
 }
 
 function copyText() {
+
     const hasil = document.getElementById("hasil").value;
 
-    navigator.clipboard.writeText(hasil).then(() => {
-        alert("Berhasil disalin");
-    });
+    navigator.clipboard.writeText(hasil);
+
+    alert("Berhasil disalin!");
+
 }
 
 function resetForm() {
 
-    document.getElementById("raw").value = "";
-    document.getElementById("tiket").value = "";
-    document.getElementById("nama").value = "";
-    document.getElementById("sid").value = "";
-    document.getElementById("layanan").value = "";
-    document.getElementById("alamat").value = "";
-    document.getElementById("rootcause").value = "";
-    document.getElementById("action").value = "";
-    document.getElementById("snkabel").value = "";
-    document.getElementById("snont").value = "";
-    document.getElementById("apc").value = "";
-    document.getElementById("upc").value = "";
-    document.getElementById("sleeve").value = "";
-    document.getElementById("pigtail").value = "";
-    document.getElementById("tikoruser").value = "";
-    document.getElementById("tikorputus").value = "";
-    document.getElementById("hasil").value = "";
+    document.querySelectorAll("input").forEach(e=>e.value="");
+    document.querySelectorAll("textarea").forEach(e=>e.value="");
+    document.querySelectorAll("select").forEach(e=>e.selectedIndex=0);
+
 }
