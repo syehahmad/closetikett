@@ -13,58 +13,77 @@
 <h1>📋 Generator Tiket Close</h1>
 
 <label>Paste Tiket MyICON+</label>
-<textarea id="raw" placeholder="Paste isi tiket di sini..."></textarea>
+<textarea id="raw" placeholder="Paste isi tiket MyICON+ di sini..."></textarea>
 
-<button onclick="ambilData()">Generate Data</button>
+<button class="full" onclick="ambilData()">Generate Data</button>
 
 <h3>Data Tiket</h3>
 
-<input type="text" id="tiket" placeholder="Nomor Tiket" readonly>
+<label>No Tiket</label>
+<input type="text" id="notiket" placeholder="No Tiket">
 
-<input type="text" id="nama" placeholder="Nama">
+<label>No Insiden</label>
+<input type="text" id="insiden" placeholder="No Insiden">
 
-<input type="text" id="sid" placeholder="SID">
+<label>Tim</label>
+<select id="tim">
+<option value="KENDAL">KENDAL</option>
+<option value="PURWOKERTO">PURWOKERTO</option>
+<option value="PBG">PBG</option>
+<option value="BANJARNEGARA">BANJARNEGARA</option>
+<option value="WONOSOBO">WONOSOBO</option>
+<option value="KEBUMEN">KEBUMEN</option>
+<option value="CILACAP">CILACAP</option>
+<option value="BMS">BMS</option>
+</select>
 
-<input type="text" id="layanan" placeholder="Layanan">
+<label>Nama</label>
+<input type="text" id="nama">
 
-<input type="text" id="alamat" placeholder="Alamat">
+<label>SID</label>
+<input type="text" id="sid">
 
+<label>Layanan (Mbps)</label>
+<input type="text" id="layanan">
+
+<label>Alamat</label>
+<input type="text" id="alamat">
+
+<label>Rootcause</label>
 <select id="rootcause">
 <option value="">Pilih Rootcause</option>
 <option>Putus Kabel</option>
 <option>Redaman Tinggi</option>
 <option>ONT Rusak</option>
 <option>Adaptor Rusak</option>
+<option>ODP Bermasalah</option>
 <option>Gangguan OLT</option>
 <option>Lainnya</option>
 </select>
 
+<label>Action</label>
 <select id="action">
 <option value="">Pilih Action</option>
 <option>Splicing</option>
 <option>Ganti ONT</option>
-<option>Ganti Adaptor</option>
 <option>Ganti Patchcord</option>
-<option>Perbaikan Jalur</option>
+<option>Ganti Adapter</option>
+<option>Normalisasi</option>
 <option>Lainnya</option>
 </select>
 
 <h3>Material Terpakai</h3>
 
 <input type="text" id="snkabel" placeholder="SN Kabel">
-
 <input type="text" id="snont" placeholder="SN ONT">
-
 <input type="text" id="apc" placeholder="Pathcord APC">
-
 <input type="text" id="upc" placeholder="Pathcord UPC">
-
 <input type="text" id="sleeve" placeholder="Sleeve Protektor">
-
 <input type="text" id="pigtail" placeholder="Pigtail">
 
-<input type="text" id="tikoruser" placeholder="TIKOR USER">
+<h3>Lokasi</h3>
 
+<input type="text" id="tikoruser" placeholder="TIKOR USER">
 <input type="text" id="tikorputus" placeholder="TIKOR TITIK PUTUS">
 
 <div class="btn-group">
@@ -73,7 +92,7 @@
 <button onclick="resetForm()">Reset</button>
 </div>
 
-<textarea id="hasil" readonly></textarea>
+<textarea id="hasil" readonly placeholder="Hasil akan muncul di sini..."></textarea>
 
 </div>
 
