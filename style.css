@@ -1,113 +1,173 @@
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
-body{
-background:#f2f5f9;
-padding:20px;
+body {
+    background-color: #f4f7f6;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
 }
 
-.container{
-max-width:700px;
-margin:auto;
-background:#fff;
-padding:20px;
-border-radius:15px;
-box-shadow:0 5px 20px rgba(0,0,0,.15);
+.main-wrapper {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
 }
 
-h1{
-text-align:center;
-color:#0d6efd;
-margin-bottom:20px;
+.form-container, .control-container {
+    background: #fff;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
 }
 
-h3{
-margin:20px 0 10px;
-color:#333;
+.form-container {
+    flex: 2;
 }
 
-label{
-display:block;
-font-weight:bold;
-margin-bottom:6px;
-margin-top:10px;
+.control-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    position: sticky;
+    top: 20px;
+    height: calc(100vh - 40px);
 }
 
-input,
-textarea,
-select{
-width:100%;
-padding:12px;
-border:1px solid #ccc;
-border-radius:10px;
-font-size:15px;
-margin-bottom:10px;
-outline:none;
-transition:.2s;
+.header {
+    text-align: center;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #edf2f7;
+    padding-bottom: 15px;
 }
 
-input:focus,
-textarea:focus,
-select:focus{
-border-color:#0d6efd;
-box-shadow:0 0 5px rgba(13,110,253,.3);
+.logo {
+    max-width: 150px;
+    margin-bottom: 10px;
 }
 
-textarea{
-resize:vertical;
-min-height:140px;
+h1 {
+    font-size: 22px;
+    color: #004a99;
+    font-weight: 700;
 }
 
-#hasil{
-min-height:320px;
-background:#f8f9fa;
+.form-section {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.btn-group{
-display:flex;
-gap:10px;
-margin-top:15px;
+.form-row {
+    display: flex;
+    gap: 15px;
 }
 
-button{
-flex:1;
-padding:12px;
-border:none;
-border-radius:10px;
-background:#0d6efd;
-color:#fff;
-font-size:15px;
-font-weight:bold;
-cursor:pointer;
-transition:.2s;
+.input-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
-button:hover{
-background:#0b5ed7;
+.input-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 4px;
 }
 
-.full{
-width:100%;
-margin-top:10px;
-margin-bottom:15px;
+input, textarea {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: 0.2s;
+    background: #fafafa;
 }
 
-@media(max-width:600px){
-
-.container{
-padding:15px;
+input:focus, textarea:focus {
+    border-color: #004a99;
+    box-shadow: 0 0 0 3px rgba(0, 74, 153, 0.1);
+    background: #fff;
+    outline: none;
 }
 
-.btn-group{
-flex-direction:column;
+textarea {
+    resize: vertical;
 }
 
-button{
-width:100%;
+#raw {
+    min-height: 80px;
 }
 
+.full-width {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+button {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-primary { background: #004a99; color: #fff; grid-column: 1 / -1; margin-top: 10px; }
+.btn-primary:hover { background: #003a7a; }
+
+.btn-success { background: #28a745; color: #fff; grid-column: 1 / -1; }
+.btn-success:hover { background: #218838; }
+
+.btn-copy { background: #17a2b8; color: #fff; }
+.btn-copy:hover { background: #138496; }
+
+.btn-danger { background: #dc3545; color: #fff; }
+.btn-danger:hover { background: #c82333; }
+
+#hasil {
+    flex: 1;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 13px;
+    background: #212529;
+    color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border: none;
+    resize: none;
+}
+
+/* Responsive Desain untuk HP */
+@media (max-width: 900px) {
+    .main-wrapper {
+        flex-direction: column;
+    }
+    .control-container {
+        position: static;
+        height: auto;
+    }
+    .form-row {
+        flex-direction: column;
+        gap: 10px;
+    }
 }
