@@ -1,28 +1,44 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generator Tiket Close</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generator Tiket Close</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
-    <h2>📋 Generator Tiket Close</h2>
+<h2>📋 Generator Tiket Close</h2>
 
-    <input type="text" id="tiket" placeholder="Nomor Tiket">
-    <input type="text" id="tim" placeholder="Tim">
-    <input type="text" id="nama" placeholder="Nama">
-    <input type="text" id="sid" placeholder="SID">
-    <input type="text" id="alamat" placeholder="Alamat">
-    <input type="text" id="penyebab" placeholder="Penyebab">
-    <input type="text" id="action" placeholder="Action">
+<input type="text" id="tiket" placeholder="Nomor Tiket">
+<input type="text" id="nama" placeholder="Nama Pelanggan">
+<input type="text" id="sid" placeholder="SID">
+<input type="number" id="layanan" placeholder="Layanan (Mbps)">
+<input type="text" id="rootcause" placeholder="Rootcause">
+<input type="text" id="action" placeholder="Action">
 
-    <button onclick="generate()">Generate</button>
-    <button onclick="copyText()">Copy</button>
+<h3>Material Terpakai</h3>
 
-    <textarea id="hasil" rows="12" readonly></textarea>
+<input type="text" id="snkabel" placeholder="SN Kabel">
+<input type="text" id="snont" placeholder="SN ONT">
+<input type="text" id="apc" placeholder="Pathcord APC">
+<input type="text" id="upc" placeholder="Pathcord UPC">
+<input type="text" id="sleeve" placeholder="Sleeve Protektor">
+<input type="text" id="pigtail" placeholder="Pigtail">
+
+<h3>Lokasi</h3>
+
+<input type="text" id="tikoruser" placeholder="TIKOR USER">
+<input type="text" id="tikorputus" placeholder="TIKOR TITIK PUTUS">
+
+<div class="btn">
+<button onclick="generate()">Generate</button>
+<button onclick="copyText()">Copy</button>
+</div>
+
+<textarea id="hasil" rows="18" readonly></textarea>
+
 </div>
 
 <script src="script.js"></script>
