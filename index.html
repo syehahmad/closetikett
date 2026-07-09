@@ -1,76 +1,137 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Generator Tiket Close</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICONET - Generator Close Tiket</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
+<div class="main-wrapper">
+    <!-- Area Kiri: Form Input -->
+    <div class="form-container">
+        <div class="header">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Logo_ICONET.png" alt="Logo ICONET" class="logo">
+            <h1>Generator Close Tiket</h1>
+        </div>
 
-<h1>📋 Generator Tiket Close</h1>
+        <!-- Input Mentah -->
+        <div class="input-group full-width">
+            <label for="raw">Paste Tiket MyICON+</label>
+            <textarea id="raw" placeholder="Paste isi tiket mentah di sini..."></textarea>
+            <button class="btn-primary" onclick="ambilData()">⚡ Generate Data</button>
+        </div>
 
-<label>Paste Tiket MyICON+</label>
-<textarea id="raw" placeholder="Paste isi tiket MyICON+ di sini..."></textarea>
+        <!-- Bagian Input Data -->
+        <div class="form-section">
+            <div class="form-row">
+                <div class="input-group">
+                    <label>No Tiket</label>
+                    <input type="text" id="notiket" placeholder="Tkt-xxxxx">
+                </div>
+                <div class="input-group">
+                    <label>No Insiden</label>
+                    <input type="text" id="insiden" placeholder="INS-xxxxx">
+                </div>
+            </div>
 
-<button class="full" onclick="ambilData()">Generate Data</button>
+            <div class="form-row">
+                <div class="input-group">
+                    <label>Nama Pelanggan</label>
+                    <input type="text" id="nama">
+                </div>
+                <div class="input-group">
+                    <label>SID</label>
+                    <input type="text" id="sid">
+                </div>
+            </div>
 
-<h3>Data Tiket</h3>
+            <div class="form-row">
+                <div class="input-group">
+                    <label>Layanan (Mbps)</label>
+                    <input type="text" id="layanan">
+                </div>
+                <div class="input-group">
+                    <label>Tim</label>
+                    <input type="text" id="tim" placeholder="KENDAL">
+                </div>
+            </div>
 
-<label>No Tiket</label>
-<input type="text" id="notiket" placeholder="No Tiket">
+            <div class="input-group full-width">
+                <label>Alamat</label>
+                <input type="text" id="alamat">
+            </div>
 
-<label>No Insiden</label>
-<input type="text" id="insiden" placeholder="No Insiden">
+            <div class="form-row">
+                <div class="input-group">
+                    <label>Rootcause</label>
+                    <input type="text" id="rootcause" placeholder="Misal: Putus Kabel">
+                </div>
+                <div class="input-group">
+                    <label>Action</label>
+                    <input type="text" id="action" placeholder="Misal: Splicing">
+                </div>
+            </div>
+        </div>
 
-<label>Tim</label>
-<input type="text" id="tim" placeholder="Contoh: KENDAL">
+        <div class="form-section material-section">
+            <div class="form-row">
+                <div class="input-group">
+                    <label>SN Kabel</label>
+                    <input type="text" id="snkabel">
+                </div>
+                <div class="input-group">
+                    <label>SN ONT</label>
+                    <input type="text" id="snont">
+                </div>
+            </div>
+            <div class="form-row three-col">
+                <div class="input-group">
+                    <label>Pathcord APC</label>
+                    <input type="text" id="apc">
+                </div>
+                <div class="input-group">
+                    <label>Pathcord UPC</label>
+                    <input type="text" id="upc">
+                </div>
+                <div class="input-group">
+                    <label>Sleeve</label>
+                    <input type="text" id="sleeve">
+                </div>
+                <div class="input-group">
+                    <label>Pigtail</label>
+                    <input type="text" id="pigtail">
+                </div>
+            </div>
+        </div>
 
-<label>Nama</label>
-<input type="text" id="nama">
+        <div class="form-section location-section">
+            <div class="form-row">
+                <div class="input-group">
+                    <label>Tikor User</label>
+                    <input type="text" id="tikoruser" placeholder="Manual koordinat">
+                </div>
+                <div class="input-group">
+                    <label>Tikor Titik Putus</label>
+                    <input type="text" id="tikorputus" placeholder="Manual koordinat">
+                </div>
+            </div>
+        </div>
 
-<label>SID</label>
-<input type="text" id="sid">
+    </div>
 
-<label>Layanan (Mbps)</label>
-<input type="text" id="layanan">
-
-<label>Alamat</label>
-<input type="text" id="alamat">
-
-<label>Rootcause</label>
-<input type="text" id="rootcause" placeholder="Contoh: Putus Kabel">
-
-<label>Action</label>
-<input type="text" id="action" placeholder="Contoh: Splicing">
-
-<h3>Material Terpakai</h3>
-
-<input type="text" id="snkabel" placeholder="SN Kabel">
-<input type="text" id="snont" placeholder="SN ONT">
-<input type="text" id="apc" placeholder="Pathcord APC">
-<input type="text" id="upc" placeholder="Pathcord UPC">
-<input type="text" id="sleeve" placeholder="Sleeve Protektor">
-<input type="text" id="pigtail" placeholder="Pigtail">
-
-<h3>Lokasi</h3>
-
-<input type="text" id="tikoruser" placeholder="TIKOR USER">
-<input type="text" id="tikorputus" placeholder="TIKOR TITIK PUTUS">
-
-<div class="btn-group">
-<button onclick="generate()">Generate Close</button>
-<button onclick="copyText()">Copy</button>
-<button onclick="resetForm()">Reset</button>
-</div>
-
-<textarea id="hasil" readonly placeholder="Hasil akan muncul di sini..."></textarea>
-
+    <!-- Area Kanan: Hasil & Tombol Kontrol -->
+    <div class="control-container">
+        <div class="action-buttons">
+            <button class="btn-success" onclick="generate()">⚙️ Format Close</button>
+            <button class="btn-copy" onclick="copyText()">📋 Copy</button>
+            <button class="btn-danger" onclick="resetForm()">🔄 Reset</button>
+        </div>
+        <textarea id="hasil" readonly placeholder="Hasil format close akan muncul di sini..."></textarea>
+    </div>
 </div>
 
 <script src="script.js"></script>
-
 </body>
 </html>
