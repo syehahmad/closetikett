@@ -158,11 +158,11 @@ button {
     flex: 1;
     font-family: 'Courier New', Courier, monospace;
     font-size: 14px;
-    background: #fff;
-    color: #f8f9fa;
+    background: #f8fafc; /* Ganti jadi abu-abu sangat terang */
+    color: #1e293b;      /* Teks warna abu-abu gelap */
     padding: 20px;
     border-radius: 8px;
-    border: none;
+    border: 1px dashed #004a99; /* Tambah garis putus-putus biru */
     resize: none;
     line-height: 1.5;
 }
