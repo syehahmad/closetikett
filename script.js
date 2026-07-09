@@ -1,24 +1,32 @@
 function generate(){
 
-    let hasil =
-`====================================
-FORMAT TIKET CLOSE
+const hasil=`FORMAT TIKET CLOSE
 ====================================
 Tiket/Insiden : ${tiket.value}
-Tim : ${tim.value}
+Tim : KENDAL
 Nama : ${nama.value}
 SID : ${sid.value}
-Alamat : ${alamat.value}
-Penyebab : ${penyebab.value}
+Layanan : ${layanan.value} Mbps
+Rootcause : ${rootcause.value}
 Action : ${action.value}
-====================================`;
 
-    document.getElementById("hasil").value = hasil;
+Material Terpakai
+-------------------
+SN Kabel : ${snkabel.value}
+SN ONT : ${snont.value}
+Pathcord APC : ${apc.value}
+Pathcord UPC : ${upc.value}
+Slevee Protektor : ${sleeve.value}
+Pigtail : ${pigtail.value}
+====================================
+TIKOR USER : ${tikoruser.value}
+TIKOR TITIK PUTUS : ${tikorputus.value}`;
+
+document.getElementById("hasil").value=hasil;
 }
 
 function copyText(){
-    let text = document.getElementById("hasil");
-    text.select();
-    document.execCommand("copy");
-    alert("Teks berhasil disalin!");
+const hasil=document.getElementById("hasil");
+navigator.clipboard.writeText(hasil.value);
+alert("Berhasil disalin");
 }
