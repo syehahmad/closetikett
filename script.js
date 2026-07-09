@@ -32,12 +32,21 @@ function ambilData() {
     // Nama
     document.getElementById("nama").value = getData("Nama", text);
 
-    // SID (Mencari variasi "Service ID" atau "SID")
-    let sidData = getData("Service Id", text);
+    // --- PERBAIKAN UTAMA: SISTEM BERLAPIS UNTUK SID / CRM ID ---
+    let sidData = getData("Service Id", text); // 1. Cari "Service ID" atau "Service Id"
+    
     if (!sidData) {
-        sidData = getData("SID", text); // Alternatif jika di tiket tertulis singkatan "SID"
+        sidData = getData("CRM Id", text); // 2. Kalau zonk, cari "CRM ID" atau "CRM Id"
     }
+    if (!sidData) {
+        sidData = getData("CRM", text); // 3. Kalau zonk juga, cari kata "CRM" saja
+    }
+    if (!sidData) {
+        sidData = getData("SID", text); // 4. Terakhir, cari kata "SID" saja
+    }
+    
     document.getElementById("sid").value = sidData;
+    // -----------------------------------------------------------
 
     // Layanan
     const layanan = getData("Layanan Produk", text) || getData("Layanan", text);
