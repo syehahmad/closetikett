@@ -1,6 +1,15 @@
+// Fungsi regex yang lebih fleksibel (bisa membaca di sebelah kanan label atau di bawahnya)
 function getData(label, text) {
-    const regex = new RegExp(label + "\\s*\\n([^\\n]+)", "i");
-    const match = text.match(regex);
+    // Mencari label, mengabaikan spasi/titik dua, lalu mengambil teks di baris yang sama atau baris berikutnya
+    const regex = new RegExp(label + "\\s*[:=-]?\\s*([^\n]+)", "i");
+    let match = text.match(regex);
+    
+    // Jika tidak ketemu di baris yang sama, pakai cara lama (cari di baris bawahnya)
+    if (!match) {
+        const regexFallback = new RegExp(label + "\\s*\\n([^\\n]+)", "i");
+        match = text.match(regexFallback);
+    }
+    
     return match ? match[1].trim() : "";
 }
 
@@ -12,19 +21,30 @@ function ambilData() {
         return;
     }
 
+    // Ambil No Tiket dari baris pertama
     const lines = text.split("\n").filter(x => x.trim() !== "");
     document.getElementById("notiket").value = lines[0] ? lines[0].replace(/[^A-Z0-9-]/gi, '').trim() : "";
 
-    const insiden = (text.match(/INSIDEN NO\.?\s*(.+)/i) || ["", ""])[1];
+    // No Insiden
+    const insiden = (text.match(/INSIDEN NO\.?\s*[:=-]?\s*(.+)/i) || text.match(/INSIDEN NO\.?\s*\n(.+)/i) || ["", ""])[1];
     document.getElementById("insiden").value = insiden.trim();
 
+    // Nama
     document.getElementById("nama").value = getData("Nama", text);
-    document.getElementById("sid").value = getData("Service Id", text);
 
-    const layanan = getData("Layanan Produk", text);
+    // SID (Mencari variasi "Service ID" atau "SID")
+    let sidData = getData("Service Id", text);
+    if (!sidData) {
+        sidData = getData("SID", text); // Alternatif jika di tiket tertulis singkatan "SID"
+    }
+    document.getElementById("sid").value = sidData;
+
+    // Layanan
+    const layanan = getData("Layanan Produk", text) || getData("Layanan", text);
     const mbps = (layanan.match(/(\d+)/) || ["", ""])[1];
     document.getElementById("layanan").value = mbps;
 
+    // Alamat
     document.getElementById("alamat").value = getData("Alamat", text);
 
     // Tetap dikosongkan untuk input manual koordinat maps
