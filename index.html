@@ -10,16 +10,70 @@
 
 <div class="container">
 
-<h2>📋 Generator Tiket Close</h2>
+<h1>📋 Generator Tiket Close</h1>
 
-<textarea id="raw" placeholder="Paste isi tiket MyICON+ di sini..."></textarea>
+<label>Paste Tiket MyICON+</label>
+<textarea id="raw" placeholder="Paste isi tiket di sini..."></textarea>
 
-<div class="btn">
-<button onclick="generate()">Generate</button>
+<button onclick="ambilData()">Generate Data</button>
+
+<h3>Data Tiket</h3>
+
+<input type="text" id="tiket" placeholder="Nomor Tiket" readonly>
+
+<input type="text" id="nama" placeholder="Nama">
+
+<input type="text" id="sid" placeholder="SID">
+
+<input type="text" id="layanan" placeholder="Layanan">
+
+<input type="text" id="alamat" placeholder="Alamat">
+
+<select id="rootcause">
+<option value="">Pilih Rootcause</option>
+<option>Putus Kabel</option>
+<option>Redaman Tinggi</option>
+<option>ONT Rusak</option>
+<option>Adaptor Rusak</option>
+<option>Gangguan OLT</option>
+<option>Lainnya</option>
+</select>
+
+<select id="action">
+<option value="">Pilih Action</option>
+<option>Splicing</option>
+<option>Ganti ONT</option>
+<option>Ganti Adaptor</option>
+<option>Ganti Patchcord</option>
+<option>Perbaikan Jalur</option>
+<option>Lainnya</option>
+</select>
+
+<h3>Material Terpakai</h3>
+
+<input type="text" id="snkabel" placeholder="SN Kabel">
+
+<input type="text" id="snont" placeholder="SN ONT">
+
+<input type="text" id="apc" placeholder="Pathcord APC">
+
+<input type="text" id="upc" placeholder="Pathcord UPC">
+
+<input type="text" id="sleeve" placeholder="Sleeve Protektor">
+
+<input type="text" id="pigtail" placeholder="Pigtail">
+
+<input type="text" id="tikoruser" placeholder="TIKOR USER">
+
+<input type="text" id="tikorputus" placeholder="TIKOR TITIK PUTUS">
+
+<div class="btn-group">
+<button onclick="generate()">Generate Close</button>
 <button onclick="copyText()">Copy</button>
+<button onclick="resetForm()">Reset</button>
 </div>
 
-<textarea id="hasil" readonly placeholder="Hasil akan muncul di sini..."></textarea>
+<textarea id="hasil" readonly></textarea>
 
 </div>
 
