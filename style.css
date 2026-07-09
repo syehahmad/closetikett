@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Ubuntu:wght@400;500;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family: 'Ubuntu', 'Montserrat', system-ui, sans-serif;
 }
 
 body {
@@ -32,7 +34,7 @@ body {
 .control-container {
     flex: 1.6; /* Diperbesar agar preview hasil sangat luas */
     background: #fff;
-    border-radius: 9px;
+    border-radius: 12px;
     padding: 20px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
     display: flex;
@@ -59,11 +61,14 @@ body {
     margin-right: auto;
 }
 
+/* Tulisan BY GW yang sudah diperkecil & dibuat samar */
 .header h3 {
-    font-size: 15px;
-    color: #004a99;
-    font-weight: 700;
-    margin-top: 5px;
+    font-size: 11px;
+    color: #718096;
+    font-weight: 500;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .form-section {
@@ -153,16 +158,16 @@ button {
 .btn-danger { background: #dc3545; color: #fff; }
 .btn-danger:hover { background: #c82333; }
 
-/* Box hitam preview hasil yang diperbesar */
+/* Box preview hasil warna terang pilihanmu */
 #hasil {
     flex: 1;
     font-family: 'Courier New', Courier, monospace;
     font-size: 14px;
-    background: #f8fafc; /* Ganti jadi abu-abu sangat terang */
+    background: #f8fafc; /* Abu-abu sangat terang */
     color: #1e293b;      /* Teks warna abu-abu gelap */
     padding: 20px;
     border-radius: 8px;
-    border: 1px dashed #004a99; /* Tambah garis putus-putus biru */
+    border: 1px dashed #004a99; /* Garis putus-putus biru */
     resize: none;
     line-height: 1.5;
 }
