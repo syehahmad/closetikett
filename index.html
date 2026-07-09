@@ -9,22 +9,18 @@
 <body>
 
 <div class="main-wrapper">
-    <!-- Area Kiri: Form Input -->
     <div class="form-container">
         <div class="header">
-    <img src="https://iconnetsumut.com/wp-content/uploads/2023/09/logo-iconnet.webp" alt="Logo ICONET" class="logo">
-    <h3>CLOSE TIKET BY MKN KENDAL </h3>
-</div>
+            <img src="https://iconnetsumut.com/wp-content/uploads/2023/09/logo-iconnet.webp" alt="Logo ICONET" class="logo">
+            <h3>CLOSE TIKET BY gw</h3>
+        </div>
 
-
-        <!-- Input Mentah -->
         <div class="input-group full-width">
-            <label for="raw">Paste Tiket</label>
-            <textarea id="raw" placeholder="Paste tiket"></textarea>
+            <label for="raw">Paste Tiket MyICON+</label>
+            <textarea id="raw" placeholder="Paste isi tiket mentah di sini..."></textarea>
             <button class="btn-primary" onclick="ambilData()">⚡ Generate Data</button>
         </div>
 
-        <!-- Bagian Input Data -->
         <div class="form-section">
             <div class="form-row">
                 <div class="input-group">
@@ -87,7 +83,7 @@
                     <input type="text" id="snont">
                 </div>
             </div>
-            <div class="form-row three-col">
+            <div class="form-row">
                 <div class="input-group">
                     <label>Pathcord APC</label>
                     <input type="text" id="apc">
@@ -96,6 +92,8 @@
                     <label>Pathcord UPC</label>
                     <input type="text" id="upc">
                 </div>
+            </div>
+            <div class="form-row">
                 <div class="input-group">
                     <label>Sleeve</label>
                     <input type="text" id="sleeve">
@@ -122,7 +120,6 @@
 
     </div>
 
-    <!-- Area Kanan: Hasil & Tombol Kontrol -->
     <div class="control-container">
         <div class="action-buttons">
             <button class="btn-success" onclick="generate()">⚙️ Format Close</button>
