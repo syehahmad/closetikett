@@ -97,17 +97,18 @@ body {
     margin-bottom: 3px;
 }
 
-/* Mengurangi ukuran teks dalam form input */
-input, textarea {
+/* Mengurangi ukuran teks dalam form input & dropdown */
+input, select, textarea {
     padding: 8px 10px;
     border: 1px solid #ddd;
     border-radius: 6px;
     font-size: 12px;
     transition: 0.2s;
     background: #fafafa;
+    width: 100%;
 }
 
-input:focus, textarea:focus {
+input:focus, select:focus, textarea:focus {
     border-color: #004a99;
     box-shadow: 0 0 0 3px rgba(0, 74, 153, 0.1);
     background: #fff;
