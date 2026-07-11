@@ -67,21 +67,28 @@ function ambilData() {
 }
 
 function generate() {
+    const timTerpilih = document.getElementById("tim").value;
     const notiket = document.getElementById("notiket").value;
     const insiden = document.getElementById("insiden").value;
+
+    // VALIDASI WAJIB PILIH TIM
+    if (timTerpilih === "") {
+        alert("Wajib memilih Tim terlebih dahulu sebelum melakukan generate format close!");
+        document.getElementById("tim").focus();
+        return;
+    }
 
     if (notiket.trim() == "" && insiden.trim() == "") {
         alert("Data tiket masih kosong. Silakan generate atau isi data terlebih dahulu.");
         return;
     }
 
-    // PERBAIKAN: Menghapus tanda titik koma (;) yang salah pada getElementById("action")
     const hasil =
 `FORMAT TIKET CLOSE
 ====================================
 No Tiket : ${notiket}
 No Insiden : ${insiden}
-Tim : ${document.getElementById("tim").value}
+Tim : ${timTerpilih}
 Nama : ${document.getElementById("nama").value}
 SID : ${document.getElementById("sid").value}
 Layanan : ${document.getElementById("layanan").value} Mbps
@@ -117,5 +124,6 @@ function copyText() {
 
 function resetForm() {
     document.querySelectorAll("input").forEach(e => e.value = "");
+    document.querySelectorAll("select").forEach(e => e.selectedIndex = 0);
     document.querySelectorAll("textarea").forEach(e => e.value = "");
 }
