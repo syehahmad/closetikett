@@ -1,13 +1,56 @@
+// Fungsi yang otomatis berjalan saat halaman dimuat
+document.addEventListener("DOMContentLoaded", function() {
+    muatTimCustom();
+});
+
+function muatTimCustom() {
+    const selectTim = document.getElementById("tim");
+    // Mengambil data tim yang tersimpan di LocalStorage
+    const timTersimpan = JSON.parse(localStorage.getItem("timCustom")) || [];
+    
+    // Memasukkan kembali tim yang tersimpan ke dalam dropdown
+    timTersimpan.forEach(namaTim => {
+        const option = document.createElement("option");
+        option.value = namaTim;
+        option.text = namaTim;
+        selectTim.add(option);
+    });
+}
+
 function tambahTimCustom() {
     const namaTim = prompt("Masukkan nama tim baru:");
     if (namaTim && namaTim.trim() !== "") {
+        const namaTimClean = namaTim.trim();
         const selectTim = document.getElementById("tim");
+        
+        // Cek apakah tim sudah ada di dropdown
+        let sudahAda = false;
+        for (let i = 0; i < selectTim.options.length; i++) {
+            if (selectTim.options[i].value === namaTimClean) {
+                sudahAda = true;
+                break;
+            }
+        }
+
+        if (sudahAda) {
+            alert("Tim '" + namaTimClean + "' sudah ada di daftar!");
+            selectTim.value = namaTimClean;
+            return;
+        }
+
+        // Tambah ke dropdown
         const option = document.createElement("option");
-        option.value = namaTim.trim();
-        option.text = namaTim.trim();
+        option.value = namaTimClean;
+        option.text = namaTimClean;
         selectTim.add(option);
-        selectTim.value = namaTim.trim();
-        alert("Tim '" + namaTim.trim() + "' berhasil ditambahkan!");
+        selectTim.value = namaTimClean;
+
+        // Simpan ke LocalStorage agar tidak hilang saat refresh
+        const timTersimpan = JSON.parse(localStorage.getItem("timCustom")) || [];
+        timTersimpan.push(namaTimClean);
+        localStorage.setItem("timCustom", JSON.stringify(timTersimpan));
+
+        alert("Tim '" + namaTimClean + "' berhasil ditambahkan dan disimpan!");
     }
 }
 
