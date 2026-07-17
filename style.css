@@ -194,3 +194,14 @@ button {
         min-height: 300px;
     }
 }
+.header-link {
+    color: #718096;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.header-link:hover {
+    color: #004a99;
+    text-decoration: underline;
+}
