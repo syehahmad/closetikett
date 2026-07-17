@@ -4,7 +4,205 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ICONET - Generator Close Tiket</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Ubuntu:wght@400;500;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Ubuntu', 'Montserrat', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .main-wrapper {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 1300px;
+        }
+
+        .form-container {
+            flex: 1.1;
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .control-container {
+            flex: 1.6;
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: sticky;
+            top: 20px;
+            height: calc(100vh - 40px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 12px;
+        }
+
+        .logo {
+            max-width: 180px;
+            height: auto;
+            margin-bottom: 5px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .header h3 {
+            font-size: 11px;
+            color: #718096;
+            font-weight: 500;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-section {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .input-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 3px;
+        }
+
+        input, select, textarea {
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 12px;
+            transition: 0.2s;
+            background: #fafafa;
+            width: 100%;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #004a99;
+            box-shadow: 0 0 0 3px rgba(0, 74, 153, 0.1);
+            background: #fff;
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        #raw {
+            min-height: 70px;
+        }
+
+        .full-width {
+            width: 100%;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-primary { background: #004a99; color: #fff; grid-column: 1 / -1; margin-top: 5px; }
+        .btn-primary:hover { background: #003a7a; }
+
+        .btn-success { background: #28a745; color: #fff; grid-column: 1 / -1; }
+        .btn-success:hover { background: #218838; }
+
+        .btn-copy { background: #17a2b8; color: #fff; }
+        .btn-copy:hover { background: #138496; }
+
+        .btn-danger { background: #dc3545; color: #fff; }
+        .btn-danger:hover { background: #c82333; }
+
+        /* Tombol custom tim */
+        .btn-custom { 
+            background: #6c757d; 
+            color: #fff; 
+            padding: 4px 8px; 
+            font-size: 11px; 
+            margin-top: 4px; 
+            font-weight: 500;
+        }
+        .btn-custom:hover { background: #5a6268; }
+
+        #hasil {
+            flex: 1;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            background: #f8fafc;
+            color: #1e293b;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px dashed #004a99;
+            resize: none;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 900px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
+            .control-container {
+                position: static;
+                height: auto;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 8px;
+            }
+            #hasil {
+                min-height: 300px;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -12,7 +210,7 @@
     <div class="form-container">
         <div class="header">
             <img src="https://iconnetsumut.com/wp-content/uploads/2023/09/logo-iconnet.webp" alt="Logo ICONET" class="logo">
-            <h3>CLOSE TIKET BY jembut</h3>
+            <h3>CLOSE TIKET BY GUA</h3>
         </div>
 
         <div class="input-group full-width">
@@ -57,6 +255,7 @@
                         <option value="Tim 2 (Ahmad, Ilan & Anam)">Tim 2 (Ahmad, Ilan & Anam)</option>
                         <option value="Tim 3 (Rifki & Raya)">Tim 3 (Rifki & Raya)</option>
                     </select>
+                    <button class="btn-custom" onclick="tambahTimCustom()">+ Tambah Tim Custom</button>
                 </div>
             </div>
 
@@ -67,11 +266,11 @@
 
             <div class="form-row">
                 <div class="input-group">
-                    <label>Rootcause</label>
+                    <label>Rootcause <span style="color: red;">*</span></label>
                     <input type="text" id="rootcause" placeholder="Misal: Putus Kabel">
                 </div>
                 <div class="input-group">
-                    <label>Action</label>
+                    <label>Action <span style="color: red;">*</span></label>
                     <input type="text" id="action" placeholder="Misal: Splicing">
                 </div>
             </div>
@@ -135,6 +334,150 @@
     </div>
 </div>
 
-<script src="script.js"></script>
+<script>
+function tambahTimCustom() {
+    const namaTim = prompt("Masukkan nama tim baru:");
+    if (namaTim && namaTim.trim() !== "") {
+        const selectTim = document.getElementById("tim");
+        const option = document.createElement("option");
+        option.value = namaTim.trim();
+        option.text = namaTim.trim();
+        selectTim.add(option);
+        selectTim.value = namaTim.trim();
+        alert("Tim '" + namaTim.trim() + "' berhasil ditambahkan!");
+    }
+}
+
+function getData(label, text) {
+    if (label.toLowerCase() === "service id" || label.toLowerCase() === "sid") {
+        const regexGabungan = /(?:Servi[cs]e\s*Id|CRM\s*ID|SID)\s*\/[^:\n]*\n([^\n]+)/i;
+        const matchGabungan = text.match(regexGabungan);
+        if (matchGabungan && !matchGabungan[1].includes("/") && !/[a-z]/i.test(matchGabungan[1])) {
+            return matchGabungan[1].trim();
+        }
+    }
+
+    const regexSebaris = new RegExp(label + "\\s*[:=-]?\\s*([^\\s/\\n][^\\n]*)", "i");
+    let match = text.match(regexSebaris);
+    
+    if (match && match[1].trim().startsWith("/")) {
+        match = null;
+    }
+
+    if (!match) {
+        const regexBawah = new RegExp(label + "\\s*\\n([^\\n]+)", "i");
+        match = text.match(regexBawah);
+    }
+    
+    return match ? match[1].trim() : "";
+}
+
+function ambilData() {
+    const text = document.getElementById("raw").value;
+
+    if (text.trim() == "") {
+        alert("Paste isi tiket terlebih dahulu!");
+        return;
+    }
+
+    const lines = text.split("\n").filter(x => x.trim() !== "");
+    document.getElementById("notiket").value = lines[0] ? lines[0].replace(/[^A-Z0-9-]/gi, '').trim() : "";
+
+    const insiden = (text.match(/INSIDEN NO\.?\s*[:=-]?\s*(.+)/i) || text.match(/INSIDEN NO\.?\s*\n(.+)/i) || ["", ""])[1];
+    document.getElementById("insiden").value = insiden.trim();
+
+    document.getElementById("nama").value = getData("Nama", text);
+
+    let sidData = getData("Service Id", text); 
+    if (!sidData) sidData = getData("Servise Id", text); 
+    if (!sidData) sidData = getData("CRM Id", text);
+    if (!sidData) sidData = getData("CRM", text);
+    if (!sidData) sidData = getData("SID", text);
+    
+    document.getElementById("sid").value = sidData;
+
+    const layanan = getData("Layanan Produk", text) || getData("Layanan", text);
+    const mbps = (layanan.match(/(\d+)/) || ["", ""])[1];
+    document.getElementById("layanan").value = mbps;
+
+    document.getElementById("alamat").value = getData("Alamat", text);
+    document.getElementById("tikoruser").value = "";
+}
+
+function generate() {
+    const timTerpilih = document.getElementById("tim").value;
+    const notiket = document.getElementById("notiket").value;
+    const insiden = document.getElementById("insiden").value;
+    const rootcause = document.getElementById("rootcause").value;
+    const action = document.getElementById("action").value;
+
+    if (timTerpilih === "") {
+        alert("Wajib memilih Tim terlebih dahulu sebelum melakukan generate format close!");
+        document.getElementById("tim").focus();
+        return;
+    }
+
+    if (rootcause.trim() === "") {
+        alert("Kolom Rootcause wajib diisi!");
+        document.getElementById("rootcause").focus();
+        return;
+    }
+
+    if (action.trim() === "") {
+        alert("Kolom Action wajib diisi!");
+        document.getElementById("action").focus();
+        return;
+    }
+
+    if (notiket.trim() == "" && insiden.trim() == "") {
+        alert("Data tiket masih kosong. Silakan generate atau isi data terlebih dahulu.");
+        return;
+    }
+
+    const hasil =
+`FORMAT TIKET CLOSE
+====================================
+No Tiket : ${notiket}
+No Insiden : ${insiden}
+Tim : ${timTerpilih}
+Nama : ${document.getElementById("nama").value}
+SID : ${document.getElementById("sid").value}
+Layanan : ${document.getElementById("layanan").value} Mbps
+Rootcause : ${rootcause}
+Action : ${action}
+
+Material Terpakai
+-------------------
+SN Kabel : ${document.getElementById("snkabel").value}
+SN ONT : ${document.getElementById("snont").value}
+Pathcord APC : ${document.getElementById("apc").value}
+Pathcord UPC : ${document.getElementById("upc").value}
+Sleeve Protektor : ${document.getElementById("sleeve").value}
+Pigtail : ${document.getElementById("pigtail").value}
+====================================
+TIKOR USER : ${document.getElementById("tikoruser").value}
+TIKOR TITIK PUTUS : ${document.getElementById("tikorputus").value}`;
+
+    document.getElementById("hasil").value = hasil;
+}
+
+function copyText() {
+    const hasil = document.getElementById("hasil").value;
+
+    if (hasil.trim() == "") {
+        alert("Belum ada hasil format close untuk disalin.");
+        return;
+    }
+
+    navigator.clipboard.writeText(hasil);
+    alert("Hasil format close berhasil disalin!");
+}
+
+function resetForm() {
+    document.querySelectorAll("input").forEach(e => e.value = "");
+    document.querySelectorAll("select").forEach(e => e.selectedIndex = 0);
+    document.querySelectorAll("textarea").forEach(e => e.value = "");
+}
+</script>
 </body>
 </html>
