@@ -1,14 +1,11 @@
-// Fungsi yang otomatis berjalan saat halaman dimuat
 document.addEventListener("DOMContentLoaded", function() {
     muatTimCustom();
 });
 
 function muatTimCustom() {
     const selectTim = document.getElementById("tim");
-    // Mengambil data tim yang tersimpan di LocalStorage
     const timTersimpan = JSON.parse(localStorage.getItem("timCustom")) || [];
     
-    // Memasukkan kembali tim yang tersimpan ke dalam dropdown
     timTersimpan.forEach(namaTim => {
         const option = document.createElement("option");
         option.value = namaTim;
@@ -23,7 +20,6 @@ function tambahTimCustom() {
         const namaTimClean = namaTim.trim();
         const selectTim = document.getElementById("tim");
         
-        // Cek apakah tim sudah ada di dropdown
         let sudahAda = false;
         for (let i = 0; i < selectTim.options.length; i++) {
             if (selectTim.options[i].value === namaTimClean) {
@@ -38,19 +34,17 @@ function tambahTimCustom() {
             return;
         }
 
-        // Tambah ke dropdown
         const option = document.createElement("option");
         option.value = namaTimClean;
         option.text = namaTimClean;
         selectTim.add(option);
         selectTim.value = namaTimClean;
 
-        // Simpan ke LocalStorage agar tidak hilang saat refresh
         const timTersimpan = JSON.parse(localStorage.getItem("timCustom")) || [];
         timTersimpan.push(namaTimClean);
         localStorage.setItem("timCustom", JSON.stringify(timTersimpan));
 
-        alert("Tim '" + namaTimClean + "' berhasil ditambahkan dan disimpan!");
+        alert("Tim '" + namaTimClean + "' berhasil ditambahkan!");
     }
 }
 
@@ -116,6 +110,7 @@ function generate() {
     const insiden = document.getElementById("insiden").value;
     const rootcause = document.getElementById("rootcause").value;
     const action = document.getElementById("action").value;
+    const tikorUser = document.getElementById("tikoruser").value;
 
     if (timTerpilih === "") {
         alert("Wajib memilih Tim terlebih dahulu sebelum melakukan generate format close!");
@@ -132,6 +127,12 @@ function generate() {
     if (action.trim() === "") {
         alert("Kolom Action wajib diisi!");
         document.getElementById("action").focus();
+        return;
+    }
+
+    if (tikorUser.trim() === "") {
+        alert("Kolom Tikor User wajib diisi!");
+        document.getElementById("tikoruser").focus();
         return;
     }
 
@@ -161,7 +162,7 @@ Pathcord UPC : ${document.getElementById("upc").value}
 Sleeve Protektor : ${document.getElementById("sleeve").value}
 Pigtail : ${document.getElementById("pigtail").value}
 ====================================
-TIKOR USER : ${document.getElementById("tikoruser").value}
+TIKOR USER : ${tikorUser}
 TIKOR TITIK PUTUS : ${document.getElementById("tikorputus").value}`;
 
     document.getElementById("hasil").value = hasil;
