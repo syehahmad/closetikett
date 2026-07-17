@@ -22,9 +22,8 @@ body {
     max-width: 1300px;
 }
 
-/* Pengaturan pembagian area kiri dan kanan di PC */
 .form-container {
-    flex: 1.1; /* Diperkecil agar area input hemat ruang */
+    flex: 1.1;
     background: #fff;
     border-radius: 12px;
     padding: 20px;
@@ -32,7 +31,7 @@ body {
 }
 
 .control-container {
-    flex: 1.6; /* Diperbesar agar preview hasil sangat luas */
+    flex: 1.6;
     background: #fff;
     border-radius: 12px;
     padding: 20px;
@@ -61,7 +60,6 @@ body {
     margin-right: auto;
 }
 
-/* Tulisan BY GW yang sudah diperkecil & dibuat samar */
 .header h3 {
     font-size: 11px;
     color: #718096;
@@ -89,7 +87,6 @@ body {
     flex-direction: column;
 }
 
-/* Mengurangi ukuran teks label */
 .input-group label {
     font-size: 11px;
     font-weight: 600;
@@ -97,7 +94,6 @@ body {
     margin-bottom: 3px;
 }
 
-/* Mengurangi ukuran teks dalam form input & dropdown */
 input, select, textarea {
     padding: 8px 10px;
     border: 1px solid #ddd;
@@ -159,21 +155,29 @@ button {
 .btn-danger { background: #dc3545; color: #fff; }
 .btn-danger:hover { background: #c82333; }
 
-/* Box preview hasil warna terang pilihanmu */
+.btn-custom { 
+    background: #6c757d; 
+    color: #fff; 
+    padding: 4px 8px; 
+    font-size: 11px; 
+    margin-top: 4px; 
+    font-weight: 500;
+}
+.btn-custom:hover { background: #5a6268; }
+
 #hasil {
     flex: 1;
     font-family: 'Courier New', Courier, monospace;
     font-size: 14px;
-    background: #f8fafc; /* Abu-abu sangat terang */
-    color: #1e293b;      /* Teks warna abu-abu gelap */
+    background: #f8fafc;
+    color: #1e293b;
     padding: 20px;
     border-radius: 8px;
-    border: 1px dashed #004a99; /* Garis putus-putus biru */
+    border: 1px dashed #004a99;
     resize: none;
     line-height: 1.5;
 }
 
-/* Desain Responsif untuk Layanan Mobile/HP */
 @media (max-width: 900px) {
     .main-wrapper {
         flex-direction: column;
