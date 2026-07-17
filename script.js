@@ -1,6 +1,17 @@
-// Fungsi regex pintar yang kebal format sebaris, beda baris, dan gabungan garis miring
+function tambahTimCustom() {
+    const namaTim = prompt("Masukkan nama tim baru:");
+    if (namaTim && namaTim.trim() !== "") {
+        const selectTim = document.getElementById("tim");
+        const option = document.createElement("option");
+        option.value = namaTim.trim();
+        option.text = namaTim.trim();
+        selectTim.add(option);
+        selectTim.value = namaTim.trim();
+        alert("Tim '" + namaTim.trim() + "' berhasil ditambahkan!");
+    }
+}
+
 function getData(label, text) {
-    // 1. Cek dulu apakah labelnya berupa model gabungan (contoh: Service Id / CRM ID)
     if (label.toLowerCase() === "service id" || label.toLowerCase() === "sid") {
         const regexGabungan = /(?:Servi[cs]e\s*Id|CRM\s*ID|SID)\s*\/[^:\n]*\n([^\n]+)/i;
         const matchGabungan = text.match(regexGabungan);
@@ -9,7 +20,6 @@ function getData(label, text) {
         }
     }
 
-    // 2. Format standar: Teks ada di baris yang sama (contoh: Service Id : 12345)
     const regexSebaris = new RegExp(label + "\\s*[:=-]?\\s*([^\\s/\\n][^\\n]*)", "i");
     let match = text.match(regexSebaris);
     
@@ -17,7 +27,6 @@ function getData(label, text) {
         match = null;
     }
 
-    // 3. Format Fallback: Teks ada di baris bawahnya
     if (!match) {
         const regexBawah = new RegExp(label + "\\s*\\n([^\\n]+)", "i");
         match = text.match(regexBawah);
@@ -34,18 +43,14 @@ function ambilData() {
         return;
     }
 
-    // Ambil No Tiket dari baris pertama
     const lines = text.split("\n").filter(x => x.trim() !== "");
     document.getElementById("notiket").value = lines[0] ? lines[0].replace(/[^A-Z0-9-]/gi, '').trim() : "";
 
-    // No Insiden
     const insiden = (text.match(/INSIDEN NO\.?\s*[:=-]?\s*(.+)/i) || text.match(/INSIDEN NO\.?\s*\n(.+)/i) || ["", ""])[1];
     document.getElementById("insiden").value = insiden.trim();
 
-    // Nama
     document.getElementById("nama").value = getData("Nama", text);
 
-    // PENCARIAN SID BERLAPIS & PINTAR
     let sidData = getData("Service Id", text); 
     if (!sidData) sidData = getData("Servise Id", text); 
     if (!sidData) sidData = getData("CRM Id", text);
@@ -54,15 +59,11 @@ function ambilData() {
     
     document.getElementById("sid").value = sidData;
 
-    // Layanan
     const layanan = getData("Layanan Produk", text) || getData("Layanan", text);
     const mbps = (layanan.match(/(\d+)/) || ["", ""])[1];
     document.getElementById("layanan").value = mbps;
 
-    // Alamat
     document.getElementById("alamat").value = getData("Alamat", text);
-
-    // Tetap dikosongkan untuk input manual koordinat maps
     document.getElementById("tikoruser").value = "";
 }
 
@@ -70,11 +71,24 @@ function generate() {
     const timTerpilih = document.getElementById("tim").value;
     const notiket = document.getElementById("notiket").value;
     const insiden = document.getElementById("insiden").value;
+    const rootcause = document.getElementById("rootcause").value;
+    const action = document.getElementById("action").value;
 
-    // VALIDASI WAJIB PILIH TIM
     if (timTerpilih === "") {
         alert("Wajib memilih Tim terlebih dahulu sebelum melakukan generate format close!");
         document.getElementById("tim").focus();
+        return;
+    }
+
+    if (rootcause.trim() === "") {
+        alert("Kolom Rootcause wajib diisi!");
+        document.getElementById("rootcause").focus();
+        return;
+    }
+
+    if (action.trim() === "") {
+        alert("Kolom Action wajib diisi!");
+        document.getElementById("action").focus();
         return;
     }
 
@@ -92,8 +106,8 @@ Tim : ${timTerpilih}
 Nama : ${document.getElementById("nama").value}
 SID : ${document.getElementById("sid").value}
 Layanan : ${document.getElementById("layanan").value} Mbps
-Rootcause : ${document.getElementById("rootcause").value}
-Action : ${document.getElementById("action").value}
+Rootcause : ${rootcause}
+Action : ${action}
 
 Material Terpakai
 -------------------
