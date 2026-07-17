@@ -17,24 +17,29 @@ body {
 
 .main-wrapper {
     display: flex;
-    gap: 20px;
+    gap: 25px;
     width: 100%;
-    max-width: 1300px;
+    max-width: 1350px;
 }
 
+/* Sisi Kiri: Form Input */
 .form-container {
-    flex: 1.1;
+    flex: 1.8;
     background: #fff;
     border-radius: 12px;
-    padding: 20px;
+    padding: 25px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
+/* Sisi Kanan: Panel Hasil & Aksi */
 .control-container {
-    flex: 1.6;
+    flex: 1;
     background: #fff;
     border-radius: 12px;
-    padding: 20px;
+    padding: 25px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
@@ -42,13 +47,15 @@ body {
     position: sticky;
     top: 20px;
     height: calc(100vh - 40px);
+    min-height: 550px;
 }
 
+/* Header Teks & Logo */
 .header {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     border-bottom: 2px solid #edf2f7;
-    padding-bottom: 12px;
+    padding-bottom: 15px;
 }
 
 .logo {
@@ -64,49 +71,65 @@ body {
     font-size: 11px;
     color: #718096;
     font-weight: 500;
-    margin-top: 4px;
+    margin-top: 6px;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-.form-section {
-    margin-bottom: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+.header-link {
+    color: #004a99;
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.2s;
 }
 
-.form-row {
-    display: flex;
-    gap: 12px;
+.header-link:hover {
+    text-decoration: underline;
+}
+
+/* Pembagian Baris Menggunakan Grid */
+.grid-row-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.grid-row-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
 }
 
 .input-group {
-    flex: 1;
     display: flex;
     flex-direction: column;
 }
 
-.input-group label {
-    font-size: 11px;
-    font-weight: 600;
-    color: #555;
-    margin-bottom: 3px;
+.input-group.full-width {
+    width: 100%;
 }
 
-input, select, textarea {
-    padding: 8px 10px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
+.input-group label {
     font-size: 12px;
-    transition: 0.2s;
-    background: #fafafa;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 5px;
+}
+
+/* Styling Input Elemen */
+input, select, textarea {
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 13px;
+    transition: all 0.2s;
+    background: #f8fafc;
     width: 100%;
 }
 
 input:focus, select:focus, textarea:focus {
     border-color: #004a99;
-    box-shadow: 0 0 0 3px rgba(0, 74, 153, 0.1);
+    box-shadow: 0 0 0 3px rgba(0, 74, 153, 0.15);
     background: #fff;
     outline: none;
 }
@@ -116,37 +139,46 @@ textarea {
 }
 
 #raw {
-    min-height: 70px;
+    min-height: 80px;
 }
 
-.full-width {
-    width: 100%;
+/* Pembatas Judul Section */
+.section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #004a99;
+    text-transform: uppercase;
+    border-left: 3px solid #004a99;
+    padding-left: 8px;
+    margin-top: 5px;
+    margin-bottom: -5px;
 }
 
+/* Desain Tombol Kontrol */
 .action-buttons {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr;
     gap: 10px;
 }
 
 button {
-    padding: 10px;
+    padding: 12px;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 13px;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.2s;
+    transition: all 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
 }
 
-.btn-primary { background: #004a99; color: #fff; grid-column: 1 / -1; margin-top: 5px; }
+.btn-primary { background: #004a99; color: #fff; margin-top: 8px; }
 .btn-primary:hover { background: #003a7a; }
 
-.btn-success { background: #28a745; color: #fff; grid-column: 1 / -1; }
+.btn-success { background: #28a745; color: #fff; }
 .btn-success:hover { background: #218838; }
 
 .btn-copy { background: #17a2b8; color: #fff; }
@@ -158,10 +190,11 @@ button {
 .btn-custom { 
     background: #6c757d; 
     color: #fff; 
-    padding: 4px 8px; 
+    padding: 6px 10px; 
     font-size: 11px; 
-    margin-top: 4px; 
+    margin-top: 6px; 
     font-weight: 500;
+    align-self: flex-start;
 }
 .btn-custom:hover { background: #5a6268; }
 
@@ -171,14 +204,15 @@ button {
     font-size: 14px;
     background: #f8fafc;
     color: #1e293b;
-    padding: 20px;
+    padding: 15px;
     border-radius: 8px;
     border: 1px dashed #004a99;
     resize: none;
     line-height: 1.5;
 }
 
-@media (max-width: 900px) {
+/* Responsif untuk layar HP / Tablet */
+@media (max-width: 950px) {
     .main-wrapper {
         flex-direction: column;
     }
@@ -186,22 +220,10 @@ button {
         position: static;
         height: auto;
     }
-    .form-row {
-        flex-direction: column;
-        gap: 8px;
+    .grid-row-3, .grid-row-2 {
+        grid-template-columns: 1fr;
     }
     #hasil {
         min-height: 300px;
     }
-}
-.header-link {
-    color: #718096;
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.2s;
-}
-
-.header-link:hover {
-    color: #004a99;
-    text-decoration: underline;
 }
