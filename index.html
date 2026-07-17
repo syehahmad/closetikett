@@ -76,6 +76,18 @@
             letter-spacing: 1px;
         }
 
+        .header-link {
+            color: #718096;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .header-link:hover {
+            color: #004a99;
+            text-decoration: underline;
+        }
+
         .form-section {
             margin-bottom: 15px;
             display: flex;
@@ -162,7 +174,6 @@
         .btn-danger { background: #dc3545; color: #fff; }
         .btn-danger:hover { background: #c82333; }
 
-        /* Tombol custom tim */
         .btn-custom { 
             background: #6c757d; 
             color: #fff; 
@@ -206,7 +217,9 @@
 </head>
 <body>
 
-<div class="header">
+<div class="main-wrapper">
+    <div class="form-container">
+        <div class="header">
             <img src="https://iconnetsumut.com/wp-content/uploads/2023/09/logo-iconnet.webp" alt="Logo ICONET" class="logo">
             <h3>CLOSE TIKET BY <a href="https://ngetik-id.vercel.app/" target="_blank" class="header-link">ngetik id</a></h3>
         </div>
@@ -310,7 +323,7 @@
         <div class="form-section location-section">
             <div class="form-row">
                 <div class="input-group">
-                    <label>Tikor User</label>
+                    <label>Tikor User <span style="color: red;">*</span></label>
                     <input type="text" id="tikoruser" placeholder="Manual koordinat">
                 </div>
                 <div class="input-group">
@@ -319,7 +332,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <div class="control-container">
@@ -333,16 +345,53 @@
 </div>
 
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+    muatTimCustom();
+});
+
+function muatTimCustom() {
+    const selectTim = document.getElementById("tim");
+    const timTersimpan = JSON.parse(localStorage.getItem("timCustom")) || [];
+    
+    timTersimpan.forEach(namaTim => {
+        const option = document.createElement("option");
+        option.value = namaTim;
+        option.text = namaTim;
+        selectTim.add(option);
+    });
+}
+
 function tambahTimCustom() {
     const namaTim = prompt("Masukkan nama tim baru:");
     if (namaTim && namaTim.trim() !== "") {
+        const namaTimClean = namaTim.trim();
         const selectTim = document.getElementById("tim");
+        
+        let sudahAda = false;
+        for (let i = 0; i < selectTim.options.length; i++) {
+            if (selectTim.options[i].value === namaTimClean) {
+                sudahAda = true;
+                break;
+            }
+        }
+
+        if (sudahAda) {
+            alert("Tim '" + namaTimClean + "' sudah ada di daftar!");
+            selectTim.value = namaTimClean;
+            return;
+        }
+
         const option = document.createElement("option");
-        option.value = namaTim.trim();
-        option.text = namaTim.trim();
+        option.value = namaTimClean;
+        option.text = namaTimClean;
         selectTim.add(option);
-        selectTim.value = namaTim.trim();
-        alert("Tim '" + namaTim.trim() + "' berhasil ditambahkan!");
+        selectTim.value = namaTimClean;
+
+        const timTersimpan = JSON.parse(localStorage.getItem("timCustom")) || [];
+        timTersimpan.push(namaTimClean);
+        localStorage.setItem("timCustom", JSON.stringify(timTersimpan));
+
+        alert("Tim '" + namaTimClean + "' berhasil ditambahkan dan disimpan!");
     }
 }
 
@@ -408,6 +457,7 @@ function generate() {
     const insiden = document.getElementById("insiden").value;
     const rootcause = document.getElementById("rootcause").value;
     const action = document.getElementById("action").value;
+    const tikorUser = document.getElementById("tikoruser").value;
 
     if (timTerpilih === "") {
         alert("Wajib memilih Tim terlebih dahulu sebelum melakukan generate format close!");
@@ -424,6 +474,12 @@ function generate() {
     if (action.trim() === "") {
         alert("Kolom Action wajib diisi!");
         document.getElementById("action").focus();
+        return;
+    }
+
+    if (tikorUser.trim() === "") {
+        alert("Kolom Tikor User wajib diisi!");
+        document.getElementById("tikoruser").focus();
         return;
     }
 
@@ -453,7 +509,7 @@ Pathcord UPC : ${document.getElementById("upc").value}
 Sleeve Protektor : ${document.getElementById("sleeve").value}
 Pigtail : ${document.getElementById("pigtail").value}
 ====================================
-TIKOR USER : ${document.getElementById("tikoruser").value}
+TIKOR USER : ${tikorUser}
 TIKOR TITIK PUTUS : ${document.getElementById("tikorputus").value}`;
 
     document.getElementById("hasil").value = hasil;
