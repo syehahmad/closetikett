@@ -333,7 +333,7 @@
             </div>
             <div class="input-group">
                 <label>Nama Pelanggan <span style="color: red;">*</span></label>
-                <input type="text" id="nama" placeholder="Misal: P456789">
+                <input type="text" id="nama" placeholder="Misal: PATSA CANDRA">
             </div>
             <div class="input-group">
                 <label>Tim Teknisi <span style="color: red;">*</span></label>
@@ -350,7 +350,7 @@
         <div class="grid-row-2">
             <div class="input-group">
                 <label>SID <span style="color: red;">*</span></label>
-                <input type="text" id="sid" placeholder="Misal: 1367890">
+                <input type="text" id="sid" placeholder="Misal: 131002496457">
             </div>
             <div class="input-group">
                 <label>Layanan (Mbps) <span style="color: red;">*</span></label>
@@ -367,7 +367,7 @@
         <div class="grid-row-2">
             <div class="input-group">
                 <label>SN ONT Lama <span style="color: red;">*</span></label>
-                <input type="text" id="snlama" placeholder="Misal: RCg">
+                <input type="text" id="snlama" placeholder="Misal: RCMG3B5845C9">
             </div>
             <div class="input-group">
                 <label>MAC ONT Lama <span style="color: red;">*</span></label>
@@ -378,7 +378,7 @@
         <div class="grid-row-2">
             <div class="input-group">
                 <label>SN ONT Baru <span style="color: red;">*</span></label>
-                <input type="text" id="snbaru" placeholder="Misal: RCMG">
+                <input type="text" id="snbaru" placeholder="Misal: RCMG...">
             </div>
             <div class="input-group">
                 <label>MAC ONT Baru <span style="color: red;">*</span></label>
@@ -388,7 +388,7 @@
 
         <div class="input-group full-width">
             <label>Rootcause <span style="color: red;">*</span></label>
-            <input type="text" id="rootcause" placeholder="Misal: ONT Bad">
+            <input type="text" id="rootcause" placeholder="Misal: ONT Red / ONT Bad">
         </div>
     </div>
 
@@ -408,13 +408,11 @@
         muatTimCustom();
     });
 
-    /* Mengontrol Dropdown Menu Strip Tiga */
     function toggleMenu(event) {
         event.stopPropagation();
         document.getElementById("dropdownContent").classList.toggle("show");
     }
 
-    /* Menutup Dropdown Saat Klik di Luar Menu */
     window.onclick = function(event) {
         if (!event.target.matches('.btn-hamburger')) {
             const dropdowns = document.getElementsByClassName("dropdown-content");
@@ -473,14 +471,7 @@
         }
     }
 
-    function getData(label, text) {
-        const regexSebaris = new RegExp(label + "[\\s\\xa0]*[:=-]?[\\s\\xa0]*([^\\n]+)", "i");
-        const match = text.match(regexSebaris);
-        return match ? match[1].trim() : "";
-    }
-
     function ambilData() {
-        // Normalisasi teks untuk menghapus spasi aneh / non-breaking space (&nbsp;)
         const rawText = document.getElementById("raw").value;
         const text = rawText.replace(/[\u00A0\u1680\u180E\u2000-\u200B\u202F\u205F\u3000]/g, " ");
 
@@ -489,18 +480,89 @@
             return;
         }
 
-        // Ambil No Tiket
-        const matchTiket = text.match(/Tiket\s*[:=-]?\s*([^\n\t\r]+)/i);
-        if (matchTiket) {
-            let value = matchTiket[1].trim();
-            if (value.includes("im")) {
-                value = value.split("im")[0].trim();
-            }
-            document.getElementById("notiket").value = value;
-        }
+        const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l !== "");
 
-        // Ambil Tim
-        const matchTim = text.match(/(?:im|Tim)\s*[:=-]?\s*([^\n]+)/i);
+        // 1. Ekstraksi No Tiket
+        let noTiket = "";
+        const matchTiket = text.match(/(?:Tiket|INSIDEN NO\.?)\s*[:=-]?\s*([A-Za-z0-9]+)/i);
+        if (matchTiket) {
+            noTiket = matchTiket[1].trim();
+        } else if (lines.length > 0 && /^[A-Za-z0-9]{5,15}$/.test(lines[0])) {
+            noTiket = lines[0];
+        }
+        document.getElementById("notiket").value = noTiket;
+
+        // 2. Ekstraksi Nama
+        let nama = "";
+        const matchNama = text.match(/(?:Nama User|Nama Pelanggan|Nama)\r?\n([^\r\n]+)/i);
+        if (matchNama) {
+            nama = matchNama[1].trim();
+        } else {
+            const matchNamaInline = text.match(/(?:Nama User|Nama Pelanggan|Nama)\s*[:=-]\s*([^\r\n]+)/i);
+            if (matchNamaInline) nama = matchNamaInline[1].trim();
+        }
+        document.getElementById("nama").value = nama;
+
+        // 3. Ekstraksi SID / Service Id
+        let sid = "";
+        const matchSID = text.match(/(?:Service Id|SID)\r?\n([0-9]+)/i);
+        if (matchSID) {
+            sid = matchSID[1].trim();
+        } else {
+            const matchSIDInline = text.match(/(?:Service Id|SID)\s*[:=-]?\s*([0-9]+)/i);
+            if (matchSIDInline) sid = matchSIDInline[1].trim();
+        }
+        document.getElementById("sid").value = sid;
+
+        // 4. Ekstraksi Layanan
+        let layanan = "";
+        const matchLayananBlock = text.match(/(?:Layanan Produk|Layanan)\r?\n([^\r\n]+)/i);
+        if (matchLayananBlock) {
+            const matchAngka = matchLayananBlock[1].match(/(\d+)\s*(?:MBPS|Mbps|mbs|MB)/i);
+            if (matchAngka) layanan = matchAngka[1];
+        }
+        if (!layanan) {
+            const matchAngkaDirect = text.match(/(\d+)\s*(?:MBPS|Mbps|mbs)/i);
+            if (matchAngkaDirect) layanan = matchAngkaDirect[1];
+        }
+        document.getElementById("layanan").value = layanan;
+
+        // 5. Ekstraksi SN ONT Lama
+        let snLama = "";
+        const matchSNBlock = text.match(/SN\r?\n([^\r\n]+)/i);
+        if (matchSNBlock) {
+            snLama = matchSNBlock[1].trim();
+        } else {
+            const matchSNInline = text.match(/SN\s*[:=-]?\s*([A-Za-z0-9]+)/i);
+            if (matchSNInline) snLama = matchSNInline[1].trim();
+        }
+        if (!snLama) {
+            const matchSNFromFTTH = text.match(/OLT\-[0-9]+\s+([A-Za-z0-9]{8,16})/i);
+            if (matchSNFromFTTH) snLama = matchSNFromFTTH[1].trim();
+        }
+        document.getElementById("snlama").value = snLama;
+
+        // 6. Ekstraksi MAC Lama
+        let macLama = "";
+        const matchMacBlock = text.match(/Mac\r?\n([^\r\n]+)/i);
+        if (matchMacBlock) {
+            macLama = matchMacBlock[1].trim();
+        } else {
+            const matchMacInline = text.match(/Mac\s*[:=-]?\s*([^\r\n]+)/i);
+            if (matchMacInline) macLama = matchMacInline[1].trim();
+        }
+        document.getElementById("maclama").value = macLama;
+
+        // 7. Ekstraksi Rootcause / Jenis Komplain
+        let rootcause = "";
+        const matchRoot = text.match(/(?:Rootcause|Jenis Komplain)\r?\n([^\r\n]+)/i);
+        if (matchRoot) {
+            rootcause = matchRoot[1].trim();
+        }
+        document.getElementById("rootcause").value = rootcause;
+
+        // 8. Ekstraksi Tim
+        const matchTim = text.match(/(?:Tim|Petugas Lapangan)\r?\n([^\r\n]+)/i);
         if (matchTim) {
             const timVal = matchTim[1].trim();
             const selectTim = document.getElementById("tim");
@@ -522,47 +584,6 @@
                 selectTim.value = timVal;
             }
         }
-
-        // Ambil Nama & SID
-        document.getElementById("nama").value = getData("Nama User", text) || getData("Nama", text);
-        document.getElementById("sid").value = getData("SID", text);
-
-        // EXTRAKSI LAYANAN (Kebaca meskipun ada spasi aneh, penulisan mbs/mbps/Mbps/MBPS)
-        const matchLayanan = text.match(/Layanan[\s\S]*?(\d+)\s*(?:mbps|mbs|mb)?/i);
-        if (matchLayanan && matchLayanan[1]) {
-            document.getElementById("layanan").value = matchLayanan[1];
-        } else {
-            const layananAlt = getData("Layanan", text);
-            const mbpsAlt = (layananAlt.match(/(\d+)/) || ["", ""])[1];
-            document.getElementById("layanan").value = mbpsAlt;
-        }
-
-        // Extract SN dan MAC
-        const snMatches = [...text.matchAll(/SN\s*[:=-]?\s*([^\n]+)/gi)];
-        if (snMatches.length >= 1) {
-            let sn1 = snMatches[0][1].trim();
-            if (sn1.toUpperCase().includes("REPLACE ONT")) {
-                sn1 = "";
-            }
-            document.getElementById("snlama").value = sn1;
-        }
-        if (snMatches.length >= 2) {
-            document.getElementById("snlama").value = snMatches[1][1].trim();
-        }
-        if (snMatches.length >= 3) {
-            document.getElementById("snbaru").value = snMatches[2][1].trim();
-        }
-
-        const macMatches = [...text.matchAll(/Mac\s*[:=-]?\s*([^\n]+)/gi)];
-        if (macMatches.length >= 1) {
-            document.getElementById("maclama").value = macMatches[0][1].trim();
-        }
-        if (macMatches.length >= 2) {
-            document.getElementById("macbaru").value = macMatches[1][1].trim();
-        }
-
-        // Extract Rootcause
-        document.getElementById("rootcause").value = getData("Rootcause", text);
     }
 
     function generate() {
