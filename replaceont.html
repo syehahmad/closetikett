@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REPLACE ONT</title>
+    
+    <link rel="icon" type="image/png" href="https://play-lh.googleusercontent.com/9nJ5D1-b66o2J8lB9y80-zX5t-xVfWbUebPqUuK2aZ52n_4Q9Q_t8uFpW_Lp2wG5Vw=w240-h480-rw">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Ubuntu:wght@400;500;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Ubuntu', 'Montserrat', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .main-wrapper {
+            display: flex;
+            gap: 25px;
+            width: 100%;
+            max-width: 1350px;
+        }
+
+        /* Sisi Kiri: Form Input */
+        .form-container {
+            flex: 1.8;
+            background: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+        }
+
+        /* Sisi Kanan: Panel Hasil */
+        .control-container {
+            flex: 1;
+            background: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: sticky;
+            top: 20px;
+            height: calc(100vh - 40px);
+            min-height: 550px;
+        }
+
+        /* Menu Strip Tiga Kiri Atas */
+        .dropdown-menu-container {
+            position: absolute;
+            top: 18px;
+            left: 20px;
+            z-index: 100;
+        }
+
+        .btn-hamburger {
+            background: transparent;
+            border: none;
+            font-size: 22px;
+            color: #4a5568;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            line-height: 1;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .btn-hamburger:hover {
+            background: #edf2f7;
+            color: #004a99;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 35px;
+            background-color: #ffffff;
+            min-width: 150px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            z-index: 101;
+        }
+
+        .dropdown-content a {
+            color: #2d3748;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f5f9;
+            color: #004a99;
+        }
+
+        .dropdown-content.show {
+            display: block;
+        }
+
+        /* Header Teks & Logo */
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 15px;
+        }
+
+        .logo {
+            max-width: 180px;
+            height: auto;
+            margin-bottom: 5px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .header h3 {
+            font-size: 11px;
+            color: #718096;
+            font-weight: 500;
+            margin-top: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .header-link {
+            color: #004a99;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.2s;
+        }
+
+        .header-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Pembagian Baris Grid */
+        .grid-row-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .grid-row-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group.full-width {
+            width: 100%;
+        }
+
+        .input-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 5px;
+        }
+
+        /* Styling Input Elemen */
+        input, select, textarea {
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 13px;
+            transition: all 0.2s;
+            background: #f8fafc;
+            width: 100%;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #004a99;
+            box-shadow: 0 0 0 3px rgba(0, 74, 153, 0.15);
+            background: #fff;
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        #raw {
+            min-height: 80px;
+        }
+
+        /* Pembatas Judul Section */
+        .section-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #004a99;
+            text-transform: uppercase;
+            border-left: 3px solid #004a99;
+            padding-left: 8px;
+            margin-top: 5px;
+            margin-bottom: -5px;
+        }
+
+        /* Desain Tombol Kontrol */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 10px;
+        }
+
+        button {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-primary { background: #004a99; color: #fff; margin-top: 8px; }
+        .btn-primary:hover { background: #003a7a; }
+
+        .btn-success { background: #28a745; color: #fff; }
+        .btn-success:hover { background: #218838; }
+
+        .btn-copy { background: #17a2b8; color: #fff; }
+        .btn-copy:hover { background: #138496; }
+
+        .btn-danger { background: #dc3545; color: #fff; }
+        .btn-danger:hover { background: #c82333; }
+
+        .btn-custom { 
+            background: #6c757d; 
+            color: #fff; 
+            padding: 6px 10px; 
+            font-size: 11px; 
+            margin-top: 6px; 
+            font-weight: 500;
+            align-self: flex-start;
+        }
+        .btn-custom:hover { background: #5a6268; }
+
+        #hasil {
+            flex: 1;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            background: #f8fafc;
+            color: #1e293b;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #004a99;
+            resize: none;
+            line-height: 1.5;
+        }
+
+        /* Responsif Layar HP / Tablet */
+        @media (max-width: 950px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
+            .control-container {
+                position: static;
+                height: auto;
+            }
+            .grid-row-3, .grid-row-2 {
+                grid-template-columns: 1fr;
+            }
+            #hasil {
+                min-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-wrapper">
+    <!-- SISI KIRI: INPUT DATA -->
+    <div class="form-container">
+        
+        <!-- MENU STRIP TIGA KIRI ATAS -->
+        <div class="dropdown-menu-container">
+            <button class="btn-hamburger" onclick="toggleMenu(event)" title="Menu Navigasi">&#9776;</button>
+            <div id="dropdownContent" class="dropdown-content">
+                <a href="#">Close Tiket</a>
+                <a href="#">Pindah FAT</a>
+            </div>
+        </div>
+
+        <div class="header">
+            <img src="https://iconnetsumut.com/wp-content/uploads/2023/09/logo-iconnet.webp" alt="Logo ICONET" class="logo">
+            <h3>REPLACE ONT BY <a href="https://ngetik-id.vercel.app/" target="_blank" class="header-link">ngetik id</a></h3>
+        </div>
+
+        <!-- Input Utama & Tempel Tiket Mentah -->
+        <div class="input-group full-width">
+            <label for="raw">Paste Data Mentah Replace ONT</label>
+            <textarea id="raw" placeholder="Paste data tiket mentah di sini..."></textarea>
+            <button class="btn-primary" onclick="ambilData()">Generate Data Otomatis</button>
+        </div>
+
+        <div class="section-title">Informasi Pelanggan</div>
+        <div class="grid-row-3">
+            <div class="input-group">
+                <label>No Tiket <span style="color: red;">*</span></label>
+                <input type="text" id="notiket" placeholder="Misal: RRV723DX">
+            </div>
+            <div class="input-group">
+                <label>Nama Pelanggan <span style="color: red;">*</span></label>
+                <input type="text" id="nama" placeholder="Misal: P456789">
+            </div>
+            <div class="input-group">
+                <label>Tim Teknisi <span style="color: red;">*</span></label>
+                <select id="tim" required>
+                    <option value="" disabled selected>-- Pilih Tim --</option>
+                    <option value="Kendal 1">Kendal 1</option>
+                    <option value="Kendal 2">Kendal 2</option>
+                    <option value="Tim 3">Tim 3</option>
+                </select>
+                <button class="btn-custom" onclick="tambahTimCustom()">+ Tambah Tim Custom</button>
+            </div>
+        </div>
+
+        <div class="grid-row-2">
+            <div class="input-group">
+                <label>SID <span style="color: red;">*</span></label>
+                <input type="text" id="sid" placeholder="Misal: 1367890">
+            </div>
+            <div class="input-group">
+                <label>Layanan (Mbps) <span style="color: red;">*</span></label>
+                <input type="text" id="layanan" placeholder="Misal: 20">
+            </div>
+        </div>
+
+        <div class="section-title">Detail ONT & Jaringan</div>
+        <div class="input-group full-width">
+            <label>OLT</label>
+            <input type="text" id="olt" value="(Diisi oleh NOC SBU)">
+        </div>
+
+        <div class="grid-row-2">
+            <div class="input-group">
+                <label>SN ONT Lama <span style="color: red;">*</span></label>
+                <input type="text" id="snlama" placeholder="Misal: RCg">
+            </div>
+            <div class="input-group">
+                <label>MAC ONT Lama <span style="color: red;">*</span></label>
+                <input type="text" id="maclama" placeholder="Misal: 20:xx:xx">
+            </div>
+        </div>
+
+        <div class="grid-row-2">
+            <div class="input-group">
+                <label>SN ONT Baru <span style="color: red;">*</span></label>
+                <input type="text" id="snbaru" placeholder="Misal: RCMG">
+            </div>
+            <div class="input-group">
+                <label>MAC ONT Baru <span style="color: red;">*</span></label>
+                <input type="text" id="macbaru" placeholder="Misal: 20:xx:xx">
+            </div>
+        </div>
+
+        <div class="input-group full-width">
+            <label>Rootcause <span style="color: red;">*</span></label>
+            <input type="text" id="rootcause" placeholder="Misal: ONT Bad">
+        </div>
+    </div>
+
+    <!-- SISI KANAN: PANEL HASIL -->
+    <div class="control-container">
+        <div class="action-buttons">
+            <button class="btn-success" onclick="generate()">Format Replace</button>
+            <button class="btn-copy" onclick="copyText()">Copy</button>
+            <button class="btn-danger" onclick="resetForm()">Reset</button>
+        </div>
+        <textarea id="hasil" readonly placeholder="Hasil format replace ONT akan muncul di sini..."></textarea>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        muatTimCustom();
+    });
+
+    /* Mengontrol Dropdown Menu Strip Tiga */
+    function toggleMenu(event) {
+        event.stopPropagation();
+        document.getElementById("dropdownContent").classList.toggle("show");
+    }
+
+    /* Menutup Dropdown Saat Klik di Luar Menu */
+    window.onclick = function(event) {
+        if (!event.target.matches('.btn-hamburger')) {
+            const dropdowns = document.getElementsByClassName("dropdown-content");
+            for (let i = 0; i < dropdowns.length; i++) {
+                const openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+
+    function muatTimCustom() {
+        const selectTim = document.getElementById("tim");
+        const timTersimpan = JSON.parse(localStorage.getItem("timCustomReplace")) || [];
+        
+        timTersimpan.forEach(namaTim => {
+            const option = document.createElement("option");
+            option.value = namaTim;
+            option.text = namaTim;
+            selectTim.add(option);
+        });
+    }
+
+    function tambahTimCustom() {
+        const namaTim = prompt("Masukkan nama tim baru:");
+        if (namaTim && namaTim.trim() !== "") {
+            const namaTimClean = namaTim.trim();
+            const selectTim = document.getElementById("tim");
+            
+            let sudahAda = false;
+            for (let i = 0; i < selectTim.options.length; i++) {
+                if (selectTim.options[i].value === namaTimClean) {
+                    sudahAda = true;
+                    break;
+                }
+            }
+
+            if (sudahAda) {
+                alert("Tim '" + namaTimClean + "' sudah ada di daftar!");
+                selectTim.value = namaTimClean;
+                return;
+            }
+
+            const option = document.createElement("option");
+            option.value = namaTimClean;
+            option.text = namaTimClean;
+            selectTim.add(option);
+            selectTim.value = namaTimClean;
+
+            const timTersimpan = JSON.parse(localStorage.getItem("timCustomReplace")) || [];
+            timTersimpan.push(namaTimClean);
+            localStorage.setItem("timCustomReplace", JSON.stringify(timTersimpan));
+
+            alert("Tim '" + namaTimClean + "' berhasil ditambahkan!");
+        }
+    }
+
+    function getData(label, text) {
+        const regexSebaris = new RegExp(label + "\\s*[:=-]?\\s*([^\\n]+)", "i");
+        const match = text.match(regexSebaris);
+        return match ? match[1].trim() : "";
+    }
+
+    function ambilData() {
+        const text = document.getElementById("raw").value;
+
+        if (text.trim() === "") {
+            alert("Paste isi data tiket terlebih dahulu!");
+            return;
+        }
+
+        // Ambil No Tiket
+        const matchTiket = text.match(/Tiket\s*[:=-]?\s*([^\n\t\r]+)/i);
+        if (matchTiket) {
+            let value = matchTiket[1].trim();
+            if (value.includes("im")) {
+                value = value.split("im")[0].trim();
+            }
+            document.getElementById("notiket").value = value;
+        }
+
+        // Ambil Tim
+        const matchTim = text.match(/(?:im|Tim)\s*[:=-]?\s*([^\n]+)/i);
+        if (matchTim) {
+            const timVal = matchTim[1].trim();
+            const selectTim = document.getElementById("tim");
+            let exists = false;
+
+            for (let i = 0; i < selectTim.options.length; i++) {
+                if (selectTim.options[i].value.toLowerCase() === timVal.toLowerCase()) {
+                    selectTim.selectedIndex = i;
+                    exists = true;
+                    break;
+                }
+            }
+
+            if (!exists) {
+                const option = document.createElement("option");
+                option.value = timVal;
+                option.text = timVal;
+                selectTim.add(option);
+                selectTim.value = timVal;
+            }
+        }
+
+        // Ambil Nama, SID, Layanan
+        document.getElementById("nama").value = getData("Nama User", text) || getData("Nama", text);
+        document.getElementById("sid").value = getData("SID", text);
+
+        const layanan = getData("Layanan", text);
+        const mbps = (layanan.match(/(\d+)/) || ["", ""])[1];
+        document.getElementById("layanan").value = mbps;
+
+        // Extract SN dan MAC
+        const snMatches = [...text.matchAll(/SN\s*[:=-]?\s*([^\n]+)/gi)];
+        if (snMatches.length >= 1) {
+            let sn1 = snMatches[0][1].trim();
+            if (sn1.toUpperCase().includes("REPLACE ONT")) {
+                sn1 = "";
+            }
+            document.getElementById("snlama").value = sn1;
+        }
+        if (snMatches.length >= 2) {
+            document.getElementById("snlama").value = snMatches[1][1].trim();
+        }
+        if (snMatches.length >= 3) {
+            document.getElementById("snbaru").value = snMatches[2][1].trim();
+        }
+
+        const macMatches = [...text.matchAll(/Mac\s*[:=-]?\s*([^\n]+)/gi)];
+        if (macMatches.length >= 1) {
+            document.getElementById("maclama").value = macMatches[0][1].trim();
+        }
+        if (macMatches.length >= 2) {
+            document.getElementById("macbaru").value = macMatches[1][1].trim();
+        }
+
+        // Extract Rootcause
+        document.getElementById("rootcause").value = getData("Rootcause", text);
+    }
+
+    function generate() {
+        const notiket = document.getElementById("notiket").value;
+        const tim = document.getElementById("tim").value;
+        const nama = document.getElementById("nama").value;
+        const sid = document.getElementById("sid").value;
+        const layanan = document.getElementById("layanan").value;
+        const olt = document.getElementById("olt").value || "(Diisi oleh NOC SBU)";
+        const snlama = document.getElementById("snlama").value;
+        const maclama = document.getElementById("maclama").value;
+        const snbaru = document.getElementById("snbaru").value;
+        const macbaru = document.getElementById("macbaru").value;
+        const rootcause = document.getElementById("rootcause").value;
+
+        if (!notiket || !tim || !nama || !sid || !layanan || !snlama || !maclama || !snbaru || !macbaru || !rootcause) {
+            alert("Harap lengkapi semua data wajib yang bertanda bintang red (*)");
+            return;
+        }
+
+        const hasil = 
+`REPLACE ONT 
+====================================
+Tiket : ${notiket}
+Tim : ${tim}
+Nama User : ${nama}
+SID : ${sid}
+Layanan : ${layanan} Mbps
+---------------------------
+OLT : ${olt}
+
+ONT Lama
+SN : ${snlama}
+Mac : ${maclama}
+
+ONT Baru
+SN : ${snbaru}
+Mac : ${macbaru}
+====================================
+Rootcause : ${rootcause}`;
+
+        document.getElementById("hasil").value = hasil;
+    }
+
+    function copyText() {
+        const hasil = document.getElementById("hasil").value;
+
+        if (hasil.trim() === "") {
+            alert("Belum ada hasil format replace ONT untuk disalin.");
+            return;
+        }
+
+        navigator.clipboard.writeText(hasil);
+        alert("Hasil format Replace ONT berhasil disalin!");
+    }
+
+    function resetForm() {
+        document.querySelectorAll("input").forEach(e => {
+            if (e.id === "olt") {
+                e.value = "(Diisi oleh NOC SBU)";
+            } else {
+                e.value = "";
+            }
+        });
+        document.querySelectorAll("select").forEach(e => e.selectedIndex = 0);
+        document.querySelectorAll("textarea").forEach(e => e.value = "");
+    }
+</script>
+
+</body>
+</html>
