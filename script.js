@@ -2,6 +2,25 @@ document.addEventListener("DOMContentLoaded", function() {
     muatTimCustom();
 });
 
+/* Mengontrol Tampilan Dropdown Menu Strip Tiga */
+function toggleMenu(event) {
+    event.stopPropagation();
+    document.getElementById("dropdownContent").classList.toggle("show");
+}
+
+/* Menutup Dropdown Saat Klik di Luar Menu */
+window.onclick = function(event) {
+    if (!event.target.matches('.btn-hamburger')) {
+        const dropdowns = document.getElementsByClassName("dropdown-content");
+        for (let i = 0; i < dropdowns.length; i++) {
+            const openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
+}
+
 function muatTimCustom() {
     const selectTim = document.getElementById("tim");
     const timTersimpan = JSON.parse(localStorage.getItem("timCustom")) || [];
