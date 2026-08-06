@@ -21,49 +21,43 @@ window.onclick = function(event) {
     }
 }
 
+/* Memuat Daftar Tim Custom ke Datalist */
 function muatTimCustom() {
-    const selectTim = document.getElementById("tim");
+    const datalist = document.getElementById("daftar-tim");
+    if (!datalist) return;
+
     const timTersimpan = JSON.parse(localStorage.getItem("timCustom")) || [];
-    
+
     timTersimpan.forEach(namaTim => {
-        const option = document.createElement("option");
-        option.value = namaTim;
-        option.text = namaTim;
-        selectTim.add(option);
+        const opsiAda = Array.from(datalist.options).some(opt => opt.value === namaTim);
+        if (!opsiAda) {
+            const option = document.createElement("option");
+            option.value = namaTim;
+            datalist.appendChild(option);
+        }
     });
 }
 
-function tambahTimCustom() {
-    const namaTim = prompt("Masukkan nama tim baru:");
-    if (namaTim && namaTim.trim() !== "") {
-        const namaTimClean = namaTim.trim();
-        const selectTim = document.getElementById("tim");
-        
-        let sudahAda = false;
-        for (let i = 0; i < selectTim.options.length; i++) {
-            if (selectTim.options[i].value === namaTimClean) {
-                sudahAda = true;
-                break;
-            }
-        }
+/* Menyimpan Tim Baru ke LocalStorage dan Datalist */
+function simpanTimCustom(namaTim) {
+    const namaClean = namaTim.trim();
+    if (!namaClean) return;
 
-        if (sudahAda) {
-            alert("Tim '" + namaTimClean + "' sudah ada di daftar!");
-            selectTim.value = namaTimClean;
-            return;
-        }
+    const datalist = document.getElementById("daftar-tim");
+    const timTersimpan = JSON.parse(localStorage.getItem("timCustom")) || [];
 
-        const option = document.createElement("option");
-        option.value = namaTimClean;
-        option.text = namaTimClean;
-        selectTim.add(option);
-        selectTim.value = namaTimClean;
-
-        const timTersimpan = JSON.parse(localStorage.getItem("timCustom")) || [];
-        timTersimpan.push(namaTimClean);
+    if (!timTersimpan.includes(namaClean)) {
+        timTersimpan.push(namaClean);
         localStorage.setItem("timCustom", JSON.stringify(timTersimpan));
+    }
 
-        alert("Tim '" + namaTimClean + "' berhasil ditambahkan!");
+    if (datalist) {
+        const opsiAda = Array.from(datalist.options).some(opt => opt.value === namaClean);
+        if (!opsiAda) {
+            const option = document.createElement("option");
+            option.value = namaClean;
+            datalist.appendChild(option);
+        }
     }
 }
 
@@ -78,7 +72,7 @@ function getData(label, text) {
 
     const regexSebaris = new RegExp(label + "\\s*[:=-]?\\s*([^\\s/\\n][^\\n]*)", "i");
     let match = text.match(regexSebaris);
-    
+
     if (match && match[1].trim().startsWith("/")) {
         match = null;
     }
@@ -87,7 +81,7 @@ function getData(label, text) {
         const regexBawah = new RegExp(label + "\\s*\\n([^\\n]+)", "i");
         match = text.match(regexBawah);
     }
-    
+
     return match ? match[1].trim() : "";
 }
 
@@ -112,7 +106,7 @@ function ambilData() {
     if (!sidData) sidData = getData("CRM Id", text);
     if (!sidData) sidData = getData("CRM", text);
     if (!sidData) sidData = getData("SID", text);
-    
+
     document.getElementById("sid").value = sidData;
 
     const layanan = getData("Layanan Produk", text) || getData("Layanan", text);
@@ -124,7 +118,7 @@ function ambilData() {
 }
 
 function generate() {
-    const timTerpilih = document.getElementById("tim").value;
+    const timTerpilih = document.getElementById("tim").value.trim();
     const notiket = document.getElementById("notiket").value;
     const insiden = document.getElementById("insiden").value;
     const rootcause = document.getElementById("rootcause").value;
@@ -132,10 +126,13 @@ function generate() {
     const tikorUser = document.getElementById("tikoruser").value;
 
     if (timTerpilih === "") {
-        alert("Wajib memilih Tim terlebih dahulu sebelum melakukan generate format close!");
+        alert("Wajib mengisi Tim terlebih dahulu sebelum melakukan generate format close!");
         document.getElementById("tim").focus();
         return;
     }
+
+    /* Simpan tim yang diketik ke datalist dan localStorage */
+    simpanTimCustom(timTerpilih);
 
     if (rootcause.trim() === "") {
         alert("Kolom Rootcause wajib diisi!");
@@ -201,6 +198,5 @@ function copyText() {
 
 function resetForm() {
     document.querySelectorAll("input").forEach(e => e.value = "");
-    document.querySelectorAll("select").forEach(e => e.selectedIndex = 0);
     document.querySelectorAll("textarea").forEach(e => e.value = "");
 }
