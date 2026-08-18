@@ -2,6 +2,23 @@ document.addEventListener("DOMContentLoaded", function() {
     buatPesan();
 });
 
+function toggleMenu(event) {
+    event.stopPropagation();
+    document.getElementById("dropdownContent").classList.toggle("show");
+}
+
+window.onclick = function(event) {
+    if (!event.target.matches('.btn-hamburger')) {
+        const dropdowns = document.getElementsByClassName("dropdown-content");
+        for (let i = 0; i < dropdowns.length; i++) {
+            const openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
+}
+
 function getSalamOtomatis() {
     const jam = new Date().getHours();
     if (jam >= 3 && jam < 11) return "Pagi";
@@ -18,7 +35,6 @@ function ambilData() {
         return;
     }
 
-    /* Hanya mencari nilai dari pola INSIDEN NO. */
     const insidenMatch = text.match(/INSIDEN NO\.?\s*[:=-]?\s*([^\n]+)/i);
     const idNomor = insidenMatch ? insidenMatch[1].trim() : "";
 
@@ -47,9 +63,11 @@ function buatPesan() {
 
     const template = 
 `Selamat ${salam}
-Perkenalkan Kami dari Tim Maintenance Iconnet Area kendal, Mau konfirmasi terkait laporan gangguan yang di alami, atas nama Bapak/Ibu ${nama} dengan nomer aduan (${idTiket})
+Perkenalkan Kami dari Tim Maintenance Iconnet Area kendal, Mau konfirmasi terkait laporan gangguan yang di alami, atas nama Bapak/Ibu ${nama} dengan nomer aduan ${idTiket}.
 
 mohon maaf atas kendala yang di alami bapak/ibu sehingga layanan internet di rumah mengalami gangguan, saat ini tiket aduan sudah masuk dan akan di kerjakan sesegera mungkin ya bapak/ibu.
+
+Boleh bantu berikan sharelock lokasi serta foto tampak depan rumahnya bapak/ibu, supaya mempermudah tim kami menuju ke lokasi.
 
 mohon maaf sekali lagi apabila harus menunggu.
 
