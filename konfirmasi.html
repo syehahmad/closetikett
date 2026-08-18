@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KONFIRMASI TIKET WA</title>
+    <link rel="icon" type="image/png" href="https://play-lh.googleusercontent.com/9nJ5D1-b66o2J8lB9y80-zX5t-xVfWbUebPqUuK2aZ52n_4Q9Q_t8uFpW_Lp2wG5Vw=w240-h480-rw">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="main-wrapper">
+    <!-- SISI KIRI: INPUT DATA -->
+    <div class="form-container">
+        <div class="header">
+            <img src="https://iconnetsumut.com/wp-content/uploads/2023/09/logo-iconnet.webp" alt="Logo ICONET" class="logo">
+            <h3>KONFIRMASI TIKET BY <a href="https://ngetik-id.vercel.app/" target="_blank" class="header-link">ngetik id</a></h3>
+        </div>
+
+        <!-- Input Tiket Mentah -->
+        <div class="input-group full-width">
+            <label for="raw">Paste Tiket</label>
+            <textarea id="raw" placeholder="Paste data tiket mentah di sini..."></textarea>
+            <button class="btn-primary" onclick="ambilData()">Generate Data Otomatis</button>
+        </div>
+
+        <div class="section-title">Detail Pelanggan</div>
+        <div class="grid-row-2">
+            <div class="input-group">
+                <label>Nama Pelanggan</label>
+                <input type="text" id="nama" placeholder="Nama Bapak/Ibu" oninput="buatPesan()">
+            </div>
+            <div class="input-group">
+                <label>No Tiket / Insiden</label>
+                <input type="text" id="notiket" placeholder="Tkt-xxxxx / INS-xxxxx" oninput="buatPesan()">
+            </div>
+        </div>
+
+        <div class="grid-row-2">
+            <div class="input-group">
+                <label>No HP/WA (Opsional)</label>
+                <input type="text" id="nohp" placeholder="Contoh: 08123456789">
+            </div>
+            <div class="input-group">
+                <label>Waktu Salam</label>
+                <select id="waktuSalam" onchange="buatPesan()">
+                    <option value="Otomatis">-- Otomatis Sesuai Jam --</option>
+                    <option value="Pagi">Pagi</option>
+                    <option value="Siang">Siang</option>
+                    <option value="Sore">Sore</option>
+                    <option value="Malam">Malam</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- SISI KANAN: HASIL PESAN -->
+    <div class="control-container">
+        <div class="action-buttons">
+            <button class="btn-success" onclick="copyWA()">Copy Pesan WA</button>
+            <button class="btn-primary" onclick="bukaWA()">Kirim WA</button>
+            <button class="btn-danger" onclick="resetForm()">Reset</button>
+        </div>
+        <textarea id="hasilWA" readonly placeholder="Pesan konfirmasi WA akan muncul otomatis di sini..."></textarea>
+    </div>
+</div>
+
+<script src="konfirmasi.js"></script>
+</body>
+</html>
