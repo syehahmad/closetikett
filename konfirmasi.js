@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function() {
     buatPesan();
 });
 
-/* Mendapatkan salam otomatis berdasarkan jam saat ini */
 function getSalamOtomatis() {
     const jam = new Date().getHours();
     if (jam >= 3 && jam < 11) return "Pagi";
@@ -11,7 +10,6 @@ function getSalamOtomatis() {
     return "Malam";
 }
 
-/* Mengambil data dari teks mentah tiket */
 function ambilData() {
     const text = document.getElementById("raw").value;
 
@@ -20,32 +18,24 @@ function ambilData() {
         return;
     }
 
-    const lines = text.split("\n").filter(x => x.trim() !== "");
-    let noTiket = lines[0] ? lines[0].replace(/[^A-Z0-9-]/gi, '').trim() : "";
-    
-    /* Penarikan Nomor Insiden presisi untuk format INSIDEN NO. 26081302269 */
+    /* Hanya mencari nilai dari pola INSIDEN NO. */
     const insidenMatch = text.match(/INSIDEN NO\.?\s*[:=-]?\s*([^\n]+)/i);
-    if (insidenMatch) {
-        noTiket = insidenMatch[1].trim();
-    }
+    const idNomor = insidenMatch ? insidenMatch[1].trim() : "";
 
-    /* Ambil Nama Pelanggan */
     const namaMatch = text.match(/Nama\s*[:=-]?\s*([^\n]+)/i);
     const nama = namaMatch ? namaMatch[1].trim() : "";
 
-    /* Ambil No HP jika ada */
     const hpMatch = text.match(/(?:No\s*HP|Telepon|HP|Telp)\s*[:=-]?\s*([0-9+]+)/i);
     if (hpMatch) {
         document.getElementById("nohp").value = hpMatch[1].trim();
     }
 
-    document.getElementById("notiket").value = noTiket;
+    document.getElementById("notiket").value = idNomor;
     document.getElementById("nama").value = nama;
 
     buatPesan();
 }
 
-/* Membentuk template pesan konfirmasi */
 function buatPesan() {
     const namaInput = document.getElementById("nama").value.trim();
     const tiketInput = document.getElementById("notiket").value.trim();
@@ -69,14 +59,16 @@ Tim CM Iconnet`;
     document.getElementById("hasilWA").value = template;
 }
 
-/* Salin teks pesan */
 function copyWA() {
     const hasil = document.getElementById("hasilWA").value;
+    if (hasil.trim() === "") {
+        alert("Belum ada pesan untuk disalin.");
+        return;
+    }
     navigator.clipboard.writeText(hasil);
     alert("Pesan WA berhasil disalin!");
 }
 
-/* Buka WhatsApp Web / App jika No HP diisi */
 function bukaWA() {
     let nohp = document.getElementById("nohp").value.replace(/[^0-9]/g, '');
     const pesan = encodeURIComponent(document.getElementById("hasilWA").value);
@@ -94,7 +86,6 @@ function bukaWA() {
     window.open(`https://api.whatsapp.com/send?phone=${nohp}&text=${pesan}`, "_blank");
 }
 
-/* Reset form */
 function resetForm() {
     document.querySelectorAll("input").forEach(e => e.value = "");
     document.querySelectorAll("textarea").forEach(e => e.value = "");
