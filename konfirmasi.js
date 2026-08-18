@@ -20,20 +20,20 @@ function ambilData() {
         return;
     }
 
-    // Ambil No Tiket / Insiden
     const lines = text.split("\n").filter(x => x.trim() !== "");
     let noTiket = lines[0] ? lines[0].replace(/[^A-Z0-9-]/gi, '').trim() : "";
     
-    if (!noTiket) {
-        const insidenMatch = text.match(/INSIDEN NO\.?\s*[:=-]?\s*(.+)/i) || text.match(/INSIDEN NO\.?\s*\n(.+)/i);
-        if (insidenMatch) noTiket = insidenMatch[1].trim();
+    /* Penarikan Nomor Insiden presisi untuk format INSIDEN NO. 26081302269 */
+    const insidenMatch = text.match(/INSIDEN NO\.?\s*[:=-]?\s*([^\n]+)/i);
+    if (insidenMatch) {
+        noTiket = insidenMatch[1].trim();
     }
 
-    // Ambil Nama Pelanggan
+    /* Ambil Nama Pelanggan */
     const namaMatch = text.match(/Nama\s*[:=-]?\s*([^\n]+)/i);
     const nama = namaMatch ? namaMatch[1].trim() : "";
 
-    // Ambil No HP jika ada
+    /* Ambil No HP jika ada */
     const hpMatch = text.match(/(?:No\s*HP|Telepon|HP|Telp)\s*[:=-]?\s*([0-9+]+)/i);
     if (hpMatch) {
         document.getElementById("nohp").value = hpMatch[1].trim();
